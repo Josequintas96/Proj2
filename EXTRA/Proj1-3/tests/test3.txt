@@ -1,8 +1,0 @@
-
-var
-   fellow : true ;
-
-begin
-   Writeln('Hello, World!');
-   Readln(a);
-end.
