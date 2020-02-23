@@ -1,0 +1,20 @@
+program HelloWorld;
+var
+alta : int;
+BaT : int;
+connecr : boolean;
+noconnecr : boolean;
+
+begin
+    if(2==2) then else ;
+    (*Hello*)
+    if(connecr) then else ;
+    (*Hello*)
+    if(true) then else ;
+    (*Hello*)
+    if(FALSE) then else ;
+    noconnecr:=false;
+    (*Hello*)
+    if(noconnecr) then else ;
+end.
+

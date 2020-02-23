@@ -1,0 +1,6 @@
+ala;
+bella;
+alleb;
+superman;
+megaman superman;
+end.

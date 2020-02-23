@@ -1,0 +1,11 @@
+if (variable1 == 0)
+{
+  if (variable2 > 250)
+  {
+    variable3 = 0;
+  }
+  else
+  {
+    variable3 = 42;
+  }
+}

@@ -1,0 +1,15 @@
+program HelloWorld;
+(*Alpha*)
+var
+alta : int;
+BaT : int;
+connecr : boolean;
+(*Alphal*)
+begin
+   writeln('Hello man');
+   writeln('Hello, man');
+   alta:=56;
+   beta:=66;
+   (*AlphaA*)
+   readln(a);
+end.

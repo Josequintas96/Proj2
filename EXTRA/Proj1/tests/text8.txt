@@ -1,0 +1,19 @@
+program HelloWorld;
+var
+alta : int;
+BaT : int;
+connecr : boolean;
+noconnecr : boolean;
+
+begin
+    alta:=5+5+5+1;
+    alta:=5+5+5+2;
+    alta:=(66);
+    alta:=((66+9)+11);
+    writeln('Hello I am superman');
+    writeln(alta);
+    readln(alta);
+    readln(BaT);
+    readln(connecr);
+
+end.

@@ -1,0 +1,11 @@
+Name: Jose Manuel Quintas
+UF-ID: 03196959
+
+			COP4020
+My code basically is divide in two parts, each one with its own rules: first the statement part where the program definition, variable definition and commets locate; and then, the "main_p" where the main block and the commands are located.
+I expect my code to be very specific, it has a lot of rules and conditions, no so many tokens.
+I compile my code using Visual Studio code or IntelliJIDEA using the three commands given in class:
+	1. antlr4 grammar.g4
+	2. javac grammar*.java
+	3. grun Program start -gui tests/.txt
+If I am on the correct way of thinking, I run my code using "grun testing ring". 

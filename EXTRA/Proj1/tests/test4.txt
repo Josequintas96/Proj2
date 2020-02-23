@@ -1,0 +1,10 @@
+program HelloWorld;
+var
+    a : int;
+    b : string;
+(*Alfa*)
+begin
+   writeln('Hello, World!');
+   
+   writeln('I am');
+end.
