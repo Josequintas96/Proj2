@@ -1,4 +1,4 @@
-// Generated from Grammar.g4 by ANTLR 4.8
+// Generated from PascalGrammar.g4 by ANTLR 4.8
 
 import java.util.*;
 import java.util.HashMap; 
@@ -18,7 +18,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class GrammarLexer extends Lexer {
+public class PascalGrammarLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -107,13 +107,13 @@ public class GrammarLexer extends Lexer {
 	Boolean happen = true;
 
 
-	public GrammarLexer(CharStream input) {
+	public PascalGrammarLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Grammar.g4"; }
+	public String getGrammarFileName() { return "PascalGrammar.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

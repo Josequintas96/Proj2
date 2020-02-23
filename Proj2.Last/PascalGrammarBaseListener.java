@@ -1,4 +1,4 @@
-// Generated from Grammar.g4 by ANTLR 4.8
+// Generated from PascalGrammar.g4 by ANTLR 4.8
 
 import java.util.*;
 import java.util.HashMap; 
@@ -14,251 +14,251 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link GrammarListener},
+ * This class provides an empty implementation of {@link PascalGrammarListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class GrammarBaseListener implements GrammarListener {
+public class PascalGrammarBaseListener implements PascalGrammarListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStart(GrammarParser.StartContext ctx) { }
+	@Override public void enterStart(PascalGrammarParser.StartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStart(GrammarParser.StartContext ctx) { }
+	@Override public void exitStart(PascalGrammarParser.StartContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatements(GrammarParser.StatementsContext ctx) { }
+	@Override public void enterStatements(PascalGrammarParser.StatementsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatements(GrammarParser.StatementsContext ctx) { }
+	@Override public void exitStatements(PascalGrammarParser.StatementsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProgI(GrammarParser.ProgIContext ctx) { }
+	@Override public void enterProgI(PascalGrammarParser.ProgIContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProgI(GrammarParser.ProgIContext ctx) { }
+	@Override public void exitProgI(PascalGrammarParser.ProgIContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarDef2(GrammarParser.VarDef2Context ctx) { }
+	@Override public void enterVarDef2(PascalGrammarParser.VarDef2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarDef2(GrammarParser.VarDef2Context ctx) { }
+	@Override public void exitVarDef2(PascalGrammarParser.VarDef2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComment(GrammarParser.CommentContext ctx) { }
+	@Override public void enterComment(PascalGrammarParser.CommentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComment(GrammarParser.CommentContext ctx) { }
+	@Override public void exitComment(PascalGrammarParser.CommentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMain_p(GrammarParser.Main_pContext ctx) { }
+	@Override public void enterMain_p(PascalGrammarParser.Main_pContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMain_p(GrammarParser.Main_pContext ctx) { }
+	@Override public void exitMain_p(PascalGrammarParser.Main_pContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSExprM(GrammarParser.SExprMContext ctx) { }
+	@Override public void enterSExprM(PascalGrammarParser.SExprMContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSExprM(GrammarParser.SExprMContext ctx) { }
+	@Override public void exitSExprM(PascalGrammarParser.SExprMContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarWork(GrammarParser.VarWorkContext ctx) { }
+	@Override public void enterVarWork(PascalGrammarParser.VarWorkContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarWork(GrammarParser.VarWorkContext ctx) { }
+	@Override public void exitVarWork(PascalGrammarParser.VarWorkContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWrT(GrammarParser.WrTContext ctx) { }
+	@Override public void enterWrT(PascalGrammarParser.WrTContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWrT(GrammarParser.WrTContext ctx) { }
+	@Override public void exitWrT(PascalGrammarParser.WrTContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfelse(GrammarParser.IfelseContext ctx) { }
+	@Override public void enterIfelse(PascalGrammarParser.IfelseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfelse(GrammarParser.IfelseContext ctx) { }
+	@Override public void exitIfelse(PascalGrammarParser.IfelseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSExprI(GrammarParser.SExprIContext ctx) { }
+	@Override public void enterSExprI(PascalGrammarParser.SExprIContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSExprI(GrammarParser.SExprIContext ctx) { }
+	@Override public void exitSExprI(PascalGrammarParser.SExprIContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWrT2(GrammarParser.WrT2Context ctx) { }
+	@Override public void enterWrT2(PascalGrammarParser.WrT2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWrT2(GrammarParser.WrT2Context ctx) { }
+	@Override public void exitWrT2(PascalGrammarParser.WrT2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprR2(GrammarParser.ExprR2Context ctx) { }
+	@Override public void enterExprR2(PascalGrammarParser.ExprR2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprR2(GrammarParser.ExprR2Context ctx) { }
+	@Override public void exitExprR2(PascalGrammarParser.ExprR2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarWork2(GrammarParser.VarWork2Context ctx) { }
+	@Override public void enterVarWork2(PascalGrammarParser.VarWork2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarWork2(GrammarParser.VarWork2Context ctx) { }
+	@Override public void exitVarWork2(PascalGrammarParser.VarWork2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCond(GrammarParser.CondContext ctx) { }
+	@Override public void enterCond(PascalGrammarParser.CondContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCond(GrammarParser.CondContext ctx) { }
+	@Override public void exitCond(PascalGrammarParser.CondContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprW(GrammarParser.ExprWContext ctx) { }
+	@Override public void enterExprW(PascalGrammarParser.ExprWContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprW(GrammarParser.ExprWContext ctx) { }
+	@Override public void exitExprW(PascalGrammarParser.ExprWContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprR(GrammarParser.ExprRContext ctx) { }
+	@Override public void enterExprR(PascalGrammarParser.ExprRContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprR(GrammarParser.ExprRContext ctx) { }
+	@Override public void exitExprR(PascalGrammarParser.ExprRContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprS(GrammarParser.ExprSContext ctx) { }
+	@Override public void enterExprS(PascalGrammarParser.ExprSContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprS(GrammarParser.ExprSContext ctx) { }
+	@Override public void exitExprS(PascalGrammarParser.ExprSContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprI(GrammarParser.ExprIContext ctx) { }
+	@Override public void enterExprI(PascalGrammarParser.ExprIContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprI(GrammarParser.ExprIContext ctx) { }
+	@Override public void exitExprI(PascalGrammarParser.ExprIContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr(GrammarParser.ExprContext ctx) { }
+	@Override public void enterExpr(PascalGrammarParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr(GrammarParser.ExprContext ctx) { }
+	@Override public void exitExpr(PascalGrammarParser.ExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

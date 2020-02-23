@@ -1,11 +1,11 @@
-grammar Grammar;
+grammar PascalGrammar;
 
-// Generate: antlr4 Grammar.g4
-// Compile: javac Grammar*.java
-// Run: grun Grammar expr -tree tests/test1.txt => expresion tree
-// Run2: grun Grammar varDef -tree tests/test1.txt => expression tree following varDef
-// Run3: grun Grammar expr -gui tests/test1.txt => print an Parse tree
-// rUN4: grun Grammar start -gui tests/test1.txt
+// Generate: antlr4 PascalGrammar.g4
+// Compile: javac PascalGrammar*.java
+// Run: grun PascalGrammar expr -tree tests/test1.txt => expresion tree
+// Run2: grun PascalGrammar varDef -tree tests/test1.txt => expression tree following varDef
+// Run3: grun PascalGrammar expr -gui tests/test1.txt => print an Parse tree
+// rUN4: grun PascalGrammar start -gui tests/test1.txt
 @header{
 import java.util.*;
 import java.util.HashMap; 
