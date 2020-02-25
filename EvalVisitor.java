@@ -5,6 +5,8 @@ import org.antlr.v4.runtime.misc.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.*;
+import java.io.*;
 
 public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         // used to compare floating point numbers
@@ -42,7 +44,10 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitUnsignedNumber(PascalGrammarParser.UnsignedNumberContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitUnsignedInteger(PascalGrammarParser.UnsignedIntegerContext ctx) { return visitChildren(ctx); }
+    @Override public Value visitUnsignedInteger(PascalGrammarParser.UnsignedIntegerContext ctx) 
+    { 
+        return new Value(Double.valueOf(ctx.getText()));
+    } 
 	
 	@Override public Value visitUnsignedReal(PascalGrammarParser.UnsignedRealContext ctx) { return visitChildren(ctx); }
 	
@@ -143,7 +148,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	@Override public Value visitVariable(PascalGrammarParser.VariableContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitExpression(PascalGrammarParser.ExpressionContext ctx) { 
-        System.out.print("visitExpression: " + ctx.simpleExpression().getText());
+        System.out.print("visitExpression: " + visitChildren(ctx));
         return visitChildren(ctx); }
 	
 	@Override public Value visitRelationaloperator(PascalGrammarParser.RelationaloperatorContext ctx) { return visitChildren(ctx); }
@@ -151,32 +156,62 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
     @Override public Value visitSimpleExpression(PascalGrammarParser.SimpleExpressionContext ctx) 
     {   //if(ctx.)
 
-        
-
+  
+            System.out.println("VC: " + visitChildren(ctx.term()));
+        //while(shouldVisitNextChild(ctx))
+        //{
+        //System.out.print("visitChild" + visitChildren(ctx));
+        //}
         if(ctx.additiveoperator() != null)
         {
-            System.out.println("visitTerm" + ctx.term().getText());
-            System.out.println("visitTerm" + ctx.term().;
-            System.out.println("visitadditiveoperator" + ctx.additiveoperator().getText());
-            System.out.println("visitadditiveoperator" + ctx.additiveoperator().getType());
-            System.out.println("visitSimpleExpression" + ctx.simpleExpression().getText());
-            System.out.println("visitSimpleExpression" + ctx.simpleExpression().getType());
+            //System.out.println("visitTerm" + ctx.term().getText());
+            //System.out.println("visitTerm" + ctx.term.getType());
+            //System.out.println("visitadditiveoperator" + ctx.additiveoperator().getText());
+            //System.out.println("visitSimpleExpression" + ctx.simpleExpression().getText());
 
+            Value left = visitChildren(ctx.term());
+            Value sign = visitChildren(ctx.additiveoperator());
+            Value right = visitChildren(ctx.simpleExpression());//.getText());
+            //System.out.println("1" + left.asString());
+            //System.out.println("hi" + sign.asString());
+            //System.out.println("2" + right.asString());
             if (ctx.additiveoperator().getText().compareTo("+") == 0){
                 
-                return(new Value (ctx.term().getText() + ctx.simpleExpression().getText()));
+                Double ans = left.asDouble() + right.asDouble();
+                System.out.println("ans: " + ans);
+                return new Value(ans);
             }
             else if(ctx.additiveoperator().getText().compareTo("-") == 0)
             {
-                return(new Value(Double.parseDouble(ctx.term().getText()) - Double.parseDouble(ctx.simpleExpression().getText())));
+                //System.out.println("got Here");
+                //System.out.println(left.asDouble());
+                //System.out.println(right.asDouble());
+                Double ans = left.asDouble() - right.asDouble();
+                System.out.println("ans: " + ans);
+                return new Value(ans);
+            }
+            else if(ctx.additiveoperator().getText().compareTo("or") == 0)
+            {
+                Value ans;
+                if(left.asBoolean() || right.asBoolean())
+                {
+                    ans = new Value(true);
+                }
+                else
+                {
+                    ans = new Value(false);
+                }
+                System.out.println("ans: " + ans);
+                return ans;
             }
             else{
+                System.out.println("visitSimpleExpressionWRRROOOONNGG22222 :  " + ctx);
                 return visitChildren(ctx);
             }
         }    
         else
         {
-            System.out.println("visitSimpleExpression: " + ctx);
+            System.out.println("visitSimpleExpressionWRRROOOONNGG :  " + ctx);
         return visitChildren(ctx); }
     }
 	
@@ -185,8 +220,55 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         }
 	
 	@Override public Value visitTerm(PascalGrammarParser.TermContext ctx) { 
-        //Value sign = 
+        if(ctx.multiplicativeoperator() != null)
+        {
+            Value left = visitChildren(ctx.signedFactor());
+            Value sign = visitChildren(ctx.multiplicativeoperator());
+            Value right = visitChildren(ctx.term());
+            if (ctx.multiplicativeoperator().getText().compareTo("*") == 0){
+                
+                Double ans = left.asDouble() * right.asDouble();
+                return new Value(ans);
+            }
+            else if(ctx.multiplicativeoperator().getText().compareTo("/") == 0)
+            {
+                Double ans = left.asDouble() / right.asDouble();
+                return new Value(ans);
+            }
+            else if(ctx.multiplicativeoperator().getText().compareTo("DIV") == 0)
+            {
+                Double ans = left.asDouble() - right.asDouble();
+
+                return new Value(ans);
+            }
+            else if(ctx.multiplicativeoperator().getText().compareTo("MOD") == 0)
+            {
+                Double ans = left.asDouble() % right.asDouble();
+                return new Value(ans);
+            }
+            else if(ctx.multiplicativeoperator().getText().compareTo("AND") == 0)
+            {
+                Value ans;
+                if(left.asBoolean() && right.asBoolean())
+                {
+                    ans = new Value(true);
+                }
+                else
+                {
+                    ans = new Value(false);
+                }
+                System.out.println("ans: " + ans);
+                return ans;
+            }
+            else{
+                System.out.println("No Expression Matched for Multiplicativeoperator :  " + ctx);
+                return visitChildren(ctx);
+            }
+        }    
+        else
+        {
         return visitChildren(ctx); }
+    }
 	
 	@Override public Value visitMultiplicativeoperator(PascalGrammarParser.MultiplicativeoperatorContext ctx) { 
         /*Value left = this.visit(ctx.expr(0));

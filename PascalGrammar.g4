@@ -300,7 +300,7 @@ simpleStatement
    ;
 
 assignmentStatement
-   : variable ASSIGN 
+   : variable ASSIGN expression
    ;
 
 variable
