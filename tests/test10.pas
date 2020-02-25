@@ -7,6 +7,7 @@ BaT : real;
 connecr : boolean;
 
 begin
+    
     writeln('Select a number');
     readln(BaT);
     
