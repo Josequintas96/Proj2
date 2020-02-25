@@ -1,4 +1,4 @@
-// Generated from PascalGrammar.g4 by ANTLR 4.8
+// Generated from c:\School\PLC\Proj2\Proj2.Last\PascalGrammar.g4 by ANTLR 4.7.1
 
 import java.util.*;
 import java.util.HashMap; 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class PascalGrammarParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -35,33 +35,24 @@ public class PascalGrammarParser extends Parser {
 		RULE_wrT = 8, RULE_ifelse = 9, RULE_sExprI = 10, RULE_wrT2 = 11, RULE_exprR2 = 12, 
 		RULE_varWork2 = 13, RULE_cond = 14, RULE_exprW = 15, RULE_exprR = 16, 
 		RULE_exprS = 17, RULE_exprI = 18, RULE_expr = 19;
-	private static String[] makeRuleNames() {
-		return new String[] {
-			"start", "statements", "progI", "varDef2", "comment", "main_p", "sExprM", 
-			"varWork", "wrT", "ifelse", "sExprI", "wrT2", "exprR2", "varWork2", "cond", 
-			"exprW", "exprR", "exprS", "exprI", "expr"
-		};
-	}
-	public static final String[] ruleNames = makeRuleNames();
+	public static final String[] ruleNames = {
+		"start", "statements", "progI", "varDef2", "comment", "main_p", "sExprM", 
+		"varWork", "wrT", "ifelse", "sExprI", "wrT2", "exprR2", "varWork2", "cond", 
+		"exprW", "exprR", "exprS", "exprI", "expr"
+	};
 
-	private static String[] makeLiteralNames() {
-		return new String[] {
-			null, "'var'", "':'", "'begin'", "'end.'", "'true'", "'false'", "'writeln'", 
-			"'readln'", "'if'", "'then'", "'else'", "'='", "'+'", "'''", "','", "'Sqrt'", 
-			"'Cos'", "'Sin'", "'ln'", "'dopower'", "'/'", "'*'", "'-'", null, null, 
-			"'('", "')'", "'program'", "':='", "';'"
-		};
-	}
-	private static final String[] _LITERAL_NAMES = makeLiteralNames();
-	private static String[] makeSymbolicNames() {
-		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, null, null, null, null, 
-			"CO1", "CO2", "PARO", "PARC", "PO", "DD", "SEMC", "ID", "INT", "FLOAT", 
-			"WS"
-		};
-	}
-	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
+	private static final String[] _LITERAL_NAMES = {
+		null, "'var'", "':'", "'begin'", "'end.'", "'true'", "'false'", "'writeln'", 
+		"'readln'", "'if'", "'then'", "'else'", "'='", "'+'", "'''", "','", "'Sqrt'", 
+		"'Cos'", "'Sin'", "'ln'", "'dopower'", "'/'", "'*'", "'-'", null, null, 
+		"'('", "')'", "'program'", "':='", "';'"
+	};
+	private static final String[] _SYMBOLIC_NAMES = {
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		"CO1", "CO2", "PARO", "PARC", "PO", "DD", "SEMC", "ID", "INT", "FLOAT", 
+		"WS"
+	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
@@ -119,7 +110,6 @@ public class PascalGrammarParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
-
 	public static class StartContext extends ParserRuleContext {
 		public StatementsContext statements() {
 			return getRuleContext(StatementsContext.class,0);
@@ -129,14 +119,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_start; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterStart(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitStart(this);
-		}
 	}
 
 	public final StartContext start() throws RecognitionException {
@@ -182,14 +164,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_statements; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterStatements(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitStatements(this);
-		}
 	}
 
 	public final StatementsContext statements() throws RecognitionException {
@@ -265,14 +239,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_progI; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterProgI(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitProgI(this);
-		}
 	}
 
 	public final ProgIContext progI() throws RecognitionException {
@@ -307,7 +273,6 @@ public class PascalGrammarParser extends Parser {
 			return getRuleContext(ExprSContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(PascalGrammarParser.ID, 0); }
-		public TerminalNode SEMC() { return getToken(PascalGrammarParser.SEMC, 0); }
 		public VarDef2Context varDef2() {
 			return getRuleContext(VarDef2Context.class,0);
 		}
@@ -318,14 +283,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_varDef2; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterVarDef2(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitVarDef2(this);
-		}
 	}
 
 	public final VarDef2Context varDef2() throws RecognitionException {
@@ -395,14 +352,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_comment; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterComment(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitComment(this);
-		}
 	}
 
 	public final CommentContext comment() throws RecognitionException {
@@ -438,14 +387,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_main_p; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterMain_p(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitMain_p(this);
-		}
 	}
 
 	public final Main_pContext main_p() throws RecognitionException {
@@ -493,14 +434,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_sExprM; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterSExprM(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitSExprM(this);
-		}
 	}
 
 	public final SExprMContext sExprM() throws RecognitionException {
@@ -571,7 +504,6 @@ public class PascalGrammarParser extends Parser {
 			return getRuleContext(ExprSContext.class,i);
 		}
 		public TerminalNode DD() { return getToken(PascalGrammarParser.DD, 0); }
-		public TerminalNode SEMC() { return getToken(PascalGrammarParser.SEMC, 0); }
 		public SExprMContext sExprM() {
 			return getRuleContext(SExprMContext.class,0);
 		}
@@ -582,14 +514,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_varWork; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterVarWork(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitVarWork(this);
-		}
 	}
 
 	public final VarWorkContext varWork() throws RecognitionException {
@@ -722,14 +646,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_wrT; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterWrT(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitWrT(this);
-		}
 	}
 
 	public final WrTContext wrT() throws RecognitionException {
@@ -819,14 +735,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ifelse; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterIfelse(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitIfelse(this);
-		}
 	}
 
 	public final IfelseContext ifelse() throws RecognitionException {
@@ -909,14 +817,6 @@ public class PascalGrammarParser extends Parser {
 			this.i = i;
 		}
 		@Override public int getRuleIndex() { return RULE_sExprI; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterSExprI(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitSExprI(this);
-		}
 	}
 
 	public final SExprIContext sExprI(Boolean i) throws RecognitionException {
@@ -984,14 +884,6 @@ public class PascalGrammarParser extends Parser {
 			this.a = a;
 		}
 		@Override public int getRuleIndex() { return RULE_wrT2; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterWrT2(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitWrT2(this);
-		}
 	}
 
 	public final WrT2Context wrT2(Boolean a) throws RecognitionException {
@@ -1066,14 +958,6 @@ public class PascalGrammarParser extends Parser {
 			this.a = a;
 		}
 		@Override public int getRuleIndex() { return RULE_exprR2; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterExprR2(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitExprR2(this);
-		}
 	}
 
 	public final ExprR2Context exprR2(Boolean a) throws RecognitionException {
@@ -1134,7 +1018,6 @@ public class PascalGrammarParser extends Parser {
 			return getRuleContext(ExprSContext.class,0);
 		}
 		public TerminalNode DD() { return getToken(PascalGrammarParser.DD, 0); }
-		public TerminalNode SEMC() { return getToken(PascalGrammarParser.SEMC, 0); }
 		public ExprIContext exprI() {
 			return getRuleContext(ExprIContext.class,0);
 		}
@@ -1144,14 +1027,6 @@ public class PascalGrammarParser extends Parser {
 			this.a = a;
 		}
 		@Override public int getRuleIndex() { return RULE_varWork2; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterVarWork2(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitVarWork2(this);
-		}
 	}
 
 	public final VarWork2Context varWork2(Boolean a) throws RecognitionException {
@@ -1243,14 +1118,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_cond; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterCond(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitCond(this);
-		}
 	}
 
 	public final CondContext cond() throws RecognitionException {
@@ -1357,14 +1224,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exprW; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterExprW(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitExprW(this);
-		}
 	}
 
 	public final ExprWContext exprW() throws RecognitionException {
@@ -1476,14 +1335,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exprR; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterExprR(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitExprR(this);
-		}
 	}
 
 	public final ExprRContext exprR() throws RecognitionException {
@@ -1584,14 +1435,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exprS; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterExprS(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitExprS(this);
-		}
 	}
 
 	public final ExprSContext exprS() throws RecognitionException {
@@ -1676,14 +1519,6 @@ public class PascalGrammarParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exprI; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterExprI(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitExprI(this);
-		}
 	}
 
 	public final ExprIContext exprI() throws RecognitionException {
@@ -1903,28 +1738,18 @@ public class PascalGrammarParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
-		public TerminalNode PARO() { return getToken(PascalGrammarParser.PARO, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
-		public TerminalNode PARC() { return getToken(PascalGrammarParser.PARC, 0); }
 		public TerminalNode ID() { return getToken(PascalGrammarParser.ID, 0); }
 		public TerminalNode INT() { return getToken(PascalGrammarParser.INT, 0); }
 		public ExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).enterExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PascalGrammarListener ) ((PascalGrammarListener)listener).exitExpr(this);
-		}
 	}
 
 	public final ExprContext expr() throws RecognitionException {

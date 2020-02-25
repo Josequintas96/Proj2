@@ -1,8 +1,8 @@
 grammar PascalGrammar;
 
 // Generate: antlr4 PascalGrammar.g4
-// Compile: javac PascalGrammar*.java
-// Run: grun PascalGrammar expr -tree tests/test1.txt => expresion tree
+// Compile: javac PascalGrammar*.java 
+// Run: grun PascalGrammar program -gui test/input1.txt
 // Run2: grun PascalGrammar varDef -tree tests/test1.txt => expression tree following varDef
 // Run3: grun PascalGrammar expr -gui tests/test1.txt => print an Parse tree
 // rUN4: grun PascalGrammar start -gui tests/test1.txt
@@ -264,7 +264,7 @@ exprI returns[Double i]:
     | INT {$i = Double.parseDouble($INT.text);}
     ;
 
-expr:
+expr:  
     '(' expr ')'
     | expr expr
     | ID
@@ -272,7 +272,7 @@ expr:
     ;
 
 //tokens
-CO1: '(''*';
+CO1: '(''*';   
 CO2: '*'')';
 PARO: '(';
 PARC: ')';
