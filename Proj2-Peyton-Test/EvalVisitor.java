@@ -1,7 +1,7 @@
-
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.*;
+import java.util.Scanner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,13 +13,14 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         public static final double SMALL_VALUE = 0.00000000001;
 
         // store variables (there's only one global scope!)
-        private Map<String, Value> memory = new HashMap<String, Value>();
+		private Map<String, Value> memory = new HashMap<String, Value>();
+		Scanner scan = new Scanner(System.in);  
 
 
         	//public Vector Scope = new vector(Map<String, Double> memoryI = new HashMap<String, Double>());
-	 public Map<String, Double> memoryI = new HashMap<String, Double>();
+	 //public Map<String, Double> memoryI = new HashMap<String, Double>();
      //ublic Map<String, Value> memoryI = new HashMap<String, Value>();
-     private Map<String, Boolean> memoryB = new HashMap<String, Boolean>();
+     //private Map<String, Boolean> memoryB = new HashMap<String, Boolean>();
 
     @Override public Value visitProgram(PascalGrammarParser.ProgramContext ctx) 
         {
@@ -121,9 +122,11 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitVariableDeclaration(PascalGrammarParser.VariableDeclarationContext ctx) 
         { 
+			/*
             System.out.println("Variable Declaration Part");
             System.out.println("Type of variable: " + ctx.type().getText());
-            System.out.println("Name of variable: " + ctx.identifierList().getText());
+			System.out.println("Name of variable: " + ctx.identifierList().getText());
+			*/
             String id = ctx.type().getText();
             String nameT = ctx.identifierList().getText();
             if(id.equals("real"))
@@ -139,8 +142,6 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 				*/
 
 				memory.put(nameT,vTT);
-				
-				// System.out.println("This is string "+ nameT + " and its value "+ memory.get(nameT));
 				Value vTT2 = memory.get(nameT);
                 System.out.println("This is string "+ nameT + " and its value "+ vTT2.asDouble());
                 //HelloT();
@@ -346,7 +347,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitParameterList(PascalGrammarParser.ParameterListContext ctx) 
 	{ 
-		
+		//System.out.println("Visit Parameter");
 		return visitChildren(ctx); 
 	}
 	
@@ -359,18 +360,65 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	@Override public Value visitProcedureStatement(PascalGrammarParser.ProcedureStatementContext ctx) 
     { 
 		
-		System.out.println("Visit Procedure Statement");
+		//System.out.println("Visit Procedure Statement");
 		String identifier = ctx.identifier().getText();
 		if(identifier.equals("writeln"))
 		{
+			/*
 			//String ss1 = ctx.parameterList().actualParameter().getText();
 			//String ss2 = String.valueOf(ctx.parameterList().actualparameter().getText());
 			//System.out.println("Hello Worlds:  " +  "   "+ ss1);
-			System.out.println(ctx.identifier().getText());
-
+			System.out.println(ctx.parameterList().getText());
+			Value val = visitChildren(ctx.parameterList()); 
+			System.out.println("This is the value: " + val.asString());
+			*/
+			int i =0;
+			String answ = "";
+			while(ctx.parameterList().actualParameter(i) != null)
+			{
+				
+				// Vy; //= new Value(cc);
+				String key = ctx.parameterList().actualParameter(i).getText();
+				if(memory.get(key) != null )
+				{
+					//System.out.println("not null");
+					Value Vy = memory.get(key);
+					answ += Vy.asString();
+				}
+				else
+				{
+					Value Vy = new Value(ctx.parameterList().actualParameter(i).getText());
+					answ += Vy.asString();
+				}
+				//System.out.println("number: " + i + " and key is: " + key);
+				//visitChildren(ctx);
+				i++;
+			}
+				System.out.println(answ);
 			return null;
 		//return visitChildren(ctx); 
 		}
+
+
+		if(identifier.equals("readln"))
+		{
+			//System.out.println(ctx.identifier().getText());
+			int i =0;
+			while(ctx.parameterList().actualParameter(i) != null)
+			{
+				String cc;
+				cc = scan.nextLine(); 
+				Value Vy = new Value(cc);
+				String key = ctx.parameterList().actualParameter(i).getText();
+				//System.out.println("number: " + i + " and key is: " + key);
+				memory.replace(key, Vy);
+				//visitChildren(ctx);
+				i++;
+			}
+			//HelloT();
+			return null;
+		}
+
 		return visitChildren(ctx);
 		/*
 		System.out.println("Visit Procedure Statement");
@@ -382,8 +430,14 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitActualParameter(PascalGrammarParser.ActualParameterContext ctx)
 	 { 
-		System.out.println("Visit ActualParameter");
+		//System.out.println("Visit ActualParameter");
 		//String X = 
+		if(memory.get(ctx.getText() ) != null )
+		{
+			System.out.println("not null");
+			return memory.get(ctx.getText());
+		}
+		System.out.println("NULL");
 		return visitChildren(ctx); 
 	}
 	
@@ -427,7 +481,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 		for(double x = InitialV; x < FinalV; x++)
 		{
 			visitChildren(ctx.statement()); 
-			System.out.println(x);
+			//System.out.println(x);
 		}
 		//return visitChildren(ctx.statement()); 
 		return null;
@@ -443,7 +497,10 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitRecordVariableList(PascalGrammarParser.RecordVariableListContext ctx) { return visitChildren(ctx); }
 
-    public void HelloT()
+	
+	
+	
+	public void HelloT()
     {
         System.out.println("Hello");
         Iterator hmIterator = memory.entrySet().iterator(); 
@@ -454,8 +511,8 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
   
         while (hmIterator.hasNext()) { 
             Map.Entry mapElement = (Map.Entry)hmIterator.next(); 
-            //Value marks = ((Value)mapElement.getValue()); 
-            //System.out.println(mapElement.getKey() + " : " + marks.asString()); 
+            Value marks = ((Value)mapElement.getValue()); 
+            System.out.println(mapElement.getKey() + " : " + marks.asString()); 
             System.out.println(i);
             i++;
         } 
