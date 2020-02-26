@@ -5,50 +5,34 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.*;
+import java.io.*;
+
+public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
+        // used to compare floating point numbers
+        public static final double SMALL_VALUE = 0.00000000001;
+
+        // store variables (there's only one global scope!)
+        private Map<String, Value> memory = new HashMap<String, Value>();
 
 
-
-class EvalVisitor extends PascalGrammarBaseVisitor< Value >
-{
-
-
-    // used to compare floating point numbers
-    public static final double SMALL_VALUE = 0.00000000001;
-
-    // store variables (there's only one global scope!)
-	private Map<String, Value> memory = new HashMap<String, Value>();
-	
-	//public Vector Scope = new vector(Map<String, Double> memoryI = new HashMap<String, Double>());
+        	//public Vector Scope = new vector(Map<String, Double> memoryI = new HashMap<String, Double>());
 	 public Map<String, Double> memoryI = new HashMap<String, Double>();
-    //ublic Map<String, Value> memoryI = new HashMap<String, Value>();
-    private Map<String, Boolean> memoryB = new HashMap<String, Boolean>();
-
+     //ublic Map<String, Value> memoryI = new HashMap<String, Value>();
+     private Map<String, Boolean> memoryB = new HashMap<String, Boolean>();
 
     @Override public Value visitProgram(PascalGrammarParser.ProgramContext ctx) 
-    {
-		System.out.println("Start of Program");
-		//System.out.println(ctx.getText());
-        //System.out.println(ctx.programHeading().identifier().getText());
-        String zep= ctx.programHeading().getText();
-        System.out.println(zep);
-         return visitChildren(ctx); 
-    }
-	@Override public Value visitProgramHeading(PascalGrammarParser.ProgramHeadingContext ctx) 
-	{ 
-		System.out.println("Program Heading");
-        
-        System.out.println(ctx.getText());
-		return visitChildren(ctx); 
-	}
+        {
+            System.out.println("Start of Program" + ctx);
+            return visitChildren(ctx); 
+        }
+	@Override public Value visitProgramHeading(PascalGrammarParser.ProgramHeadingContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitIdentifier(PascalGrammarParser.IdentifierContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitIdentifier(PascalGrammarParser.IdentifierContext ctx) { 
+        //system.out.println(ctx.getText());
+        return visitChildren(ctx); }
 	
-	@Override public Value visitBlock(PascalGrammarParser.BlockContext ctx) 
-	{ 
-		System.out.println("Block");
-		System.out.println(ctx.getText());
-		return visitChildren(ctx); 
-	}
+	@Override public Value visitBlock(PascalGrammarParser.BlockContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitUsesUnitsPart(PascalGrammarParser.UsesUnitsPartContext ctx) { return visitChildren(ctx); }
 	
@@ -66,7 +50,10 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	
 	@Override public Value visitUnsignedNumber(PascalGrammarParser.UnsignedNumberContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitUnsignedInteger(PascalGrammarParser.UnsignedIntegerContext ctx) { return visitChildren(ctx); }
+    @Override public Value visitUnsignedInteger(PascalGrammarParser.UnsignedIntegerContext ctx) 
+    { 
+        return new Value(Double.valueOf(ctx.getText()));
+    } 
 	
 	@Override public Value visitUnsignedReal(PascalGrammarParser.UnsignedRealContext ctx) { return visitChildren(ctx); }
 	
@@ -130,46 +117,53 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	
 	@Override public Value visitPointerType(PascalGrammarParser.PointerTypeContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitVariableDeclarationPart(PascalGrammarParser.VariableDeclarationPartContext ctx) 
-	{ 
-		System.out.println("Variable Declaration Part");
-		return visitChildren(ctx); 
-	}
+	@Override public Value visitVariableDeclarationPart(PascalGrammarParser.VariableDeclarationPartContext ctx) { return visitChildren(ctx); }
 	
-    @Override public Value visitVariableDeclaration(PascalGrammarParser.VariableDeclarationContext ctx) 
-    { 
-        System.out.println("Variable Declaration Part");
-        System.out.println("Type of variable: " + ctx.type().getText());
-        System.out.println("Name of variable: " + ctx.identifierList().getText());
-		String id = ctx.type().getText();
-		String nameT = ctx.identifierList().getText();
-        if(id.equals("real"))
-        {
-            //System.out.println("It is real");
-            Value value = this.visit(ctx.type());
-            //String SS = "h";// = value.asString();
-            //String SS = value.asString();
-            //int i =0;
-            //Value value = (Value)null;
-            //memoryI.put("alta", 0.0);
-			memoryI.put(nameT,0.0);
-			memory.put(id,value);
-            //System.out.println("This is value "+memoryI.get("alta"));
-			System.out.println("This is value "+ memoryI.get(nameT));
-			System.out.println("This is string "+ nameT);
-			System.out.println("This is value2 "+ memoryI.get("alta"));
-			//System.out.println("This is value "+ memory.get(id).asString());
-            //HelloT();
+	@Override public Value visitVariableDeclaration(PascalGrammarParser.VariableDeclarationContext ctx) 
+        { 
+            System.out.println("Variable Declaration Part");
+            System.out.println("Type of variable: " + ctx.type().getText());
+            System.out.println("Name of variable: " + ctx.identifierList().getText());
+            String id = ctx.type().getText();
+            String nameT = ctx.identifierList().getText();
+            if(id.equals("real"))
+            {
+				Value vTT = new Value(0.0);
 
-        };
-        if(id.equals("boolean"))
-        {
-            //System.out.println("It is boolean");
-            //Value value = this.visit(ctx.identifierList());
-            memoryB.put(nameT, true);
-        };
+				/*
+				memoryI.put(nameT,0.0);
+				memory.put(id,value);
+				System.out.println("This is value "+ memoryI.get(nameT));
+                System.out.println("This is string "+ nameT);
+				System.out.println("This is value2 "+ memoryI.get("alta"));
+				*/
+
+				memory.put(nameT,vTT);
+				
+				// System.out.println("This is string "+ nameT + " and its value "+ memory.get(nameT));
+				Value vTT2 = memory.get(nameT);
+                System.out.println("This is string "+ nameT + " and its value "+ vTT2.asDouble());
+                //HelloT();
+    
+            };
+            if(id.equals("boolean"))
+            {
+				//memoryB.put(nameT, true);
+				Value vTT = new Value(true);
+
+				memory.put(nameT,vTT);
+				
+				// System.out.println("This is string "+ nameT + " and its value "+ memory.get(nameT));
+				Value vTT2 = memory.get(nameT);
+                System.out.println("This is string "+ nameT + " and its value "+ vTT2.asString());
+                HelloT();
+
+            };
+
+            
         
-        return visitChildren(ctx); }
+        return visitChildren(ctx); 
+    }
 	
 	@Override public Value visitProcedureAndFunctionDeclarationPart(PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext ctx) { return visitChildren(ctx); }
 	
@@ -191,72 +185,169 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	
 	@Override public Value visitResultType(PascalGrammarParser.ResultTypeContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitStatement(PascalGrammarParser.StatementContext ctx) 
-	{ 
-		System.out.println("Visit Statement");
-		return visitChildren(ctx); 
-	}
+	@Override public Value visitStatement(PascalGrammarParser.StatementContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitUnlabelledStatement(PascalGrammarParser.UnlabelledStatementContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitSimpleStatement(PascalGrammarParser.SimpleStatementContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitAssignmentStatement(PascalGrammarParser.AssignmentStatementContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitAssignmentStatement(PascalGrammarParser.AssignmentStatementContext ctx) { 
+        //system.out.println("expresssion: " + ctx.expression().getText());
+        return visitChildren(ctx); }
 	
 	@Override public Value visitVariable(PascalGrammarParser.VariableContext ctx) { return visitChildren(ctx); }
 	
-    @Override public Value visitExpression(PascalGrammarParser.ExpressionContext ctx) 
-    { 
-        System.out.println("Visit Expression");
-        System.out.println(ctx.getText());
-        return visitChildren(ctx); 
-    }
+	@Override public Value visitExpression(PascalGrammarParser.ExpressionContext ctx) { 
+        //system.out.print("visitExpression: " + visitChildren(ctx));
+        return visitChildren(ctx); }
 	
 	@Override public Value visitRelationaloperator(PascalGrammarParser.RelationaloperatorContext ctx) { return visitChildren(ctx); }
 	
-    @Override public Value visitSimpleExpression(PascalGrammarParser.SimpleExpressionContext ctx)
-    { 
-        System.out.println("Visit Simple Expression");
-        //System.out.println(ctx.getText());
-        return visitChildren(ctx); 
-    }
-	
-	@Override public Value visitAdditiveoperator(PascalGrammarParser.AdditiveoperatorContext ctx) { return visitChildren(ctx); }
-	
-    @Override public Value visitTerm(PascalGrammarParser.TermContext ctx) 
-    { 
-        System.out.println("Visit Term");
-       // System.out.println(ctx.getText());
-        //System.out.println(ctx.Value.asDouble());
-     return visitChildren(ctx); 
-    }
-	
-    @Override public Value visitFactor(PascalGrammarParser.FactorContext ctx) 
-    { 
-        System.out.println("Visit Factor");
-        //System.out.println(ctx.getText());
-        return visitChildren(ctx); 
-    }
-	
-    @Override public Value visitUnsignedConstant(PascalGrammarParser.UnsignedConstantContext ctx) 
-    { 
-        System.out.println("Visit Indigned Constant");
-        System.out.println(ctx.getText());
+    @Override public Value visitSimpleExpression(PascalGrammarParser.SimpleExpressionContext ctx) 
+    {   //if(ctx.)
+
+  
+            ////system.out.println("VC: " + visitChildren(ctx.term()));
+        //while(shouldVisitNextChild(ctx))
+        //{
+        ////system.out.print("visitChild" + visitChildren(ctx));
+        //}
+        if(ctx.additiveoperator() != null)
+        {
+            ////system.out.println("visitTerm" + ctx.term().getText());
+            ////system.out.println("visitTerm" + ctx.term.getType());
+            ////system.out.println("visitadditiveoperator" + ctx.additiveoperator().getText());
+            ////system.out.println("visitSimpleExpression" + ctx.simpleExpression().getText());
+
+            Value left = visitChildren(ctx.term());
+            Value sign = visitChildren(ctx.additiveoperator());
+            Value right = visitChildren(ctx.simpleExpression());//.getText());
+            ////system.out.println("1" + left.asString());
+            ////system.out.println("hi" + sign.asString());
+            ////system.out.println("2" + right.asString());
+            if (ctx.additiveoperator().getText().compareTo("+") == 0){
+                
+                Double ans = left.asDouble() + right.asDouble();
+                //system.out.println("ans: " + ans);
+                return new Value(ans);
+            }
+            else if(ctx.additiveoperator().getText().compareTo("-") == 0)
+            {
+                ////system.out.println("got Here");
+                ////system.out.println(left.asDouble());
+                ////system.out.println(right.asDouble());
+                Double ans = left.asDouble() - right.asDouble();
+                //system.out.println("ans: " + ans);
+                return new Value(ans);
+            }
+            else if(ctx.additiveoperator().getText().compareTo("or") == 0)
+            {
+                Value ans;
+                if(left.asBoolean() || right.asBoolean())
+                {
+                    ans = new Value(true);
+                }
+                else
+                {
+                    ans = new Value(false);
+                }
+                //system.out.println("ans: " + ans);
+                return ans;
+            }
+            else{
+                ////system.out.println("visitSimpleExpressionWRRROOOONNGG22222 :  " + ctx);
+                return visitChildren(ctx);
+            }
+        }    
+        else
+        {
+            ////system.out.println("visitSimpleExpressionWRRROOOONNGG :  " + ctx);
         return visitChildren(ctx); }
+    }
+	
+	@Override public Value visitAdditiveoperator(PascalGrammarParser.AdditiveoperatorContext ctx) { 
+            return visitChildren(ctx); 
+        }
+	
+	@Override public Value visitTerm(PascalGrammarParser.TermContext ctx) { 
+        if(ctx.multiplicativeoperator() != null)
+        {
+            Value left = visitChildren(ctx.signedFactor());
+            Value sign = visitChildren(ctx.multiplicativeoperator());
+            Value right = visitChildren(ctx.term());
+            if (ctx.multiplicativeoperator().getText().compareTo("*") == 0){
+                
+                Double ans = left.asDouble() * right.asDouble();
+                return new Value(ans);
+            }
+            else if(ctx.multiplicativeoperator().getText().compareTo("/") == 0)
+            {
+                Double ans = left.asDouble() / right.asDouble();
+                return new Value(ans);
+            }
+            else if(ctx.multiplicativeoperator().getText().compareTo("DIV") == 0)
+            {
+                Double ans = left.asDouble() / right.asDouble();
+
+                return new Value(ans);
+            }
+            else if(ctx.multiplicativeoperator().getText().compareTo("MOD") == 0)
+            {
+                Double ans = left.asDouble() % right.asDouble();
+                return new Value(ans);
+            }
+            else if(ctx.multiplicativeoperator().getText().compareTo("AND") == 0)
+            {
+                Value ans;
+                if(left.asBoolean() && right.asBoolean())
+                {
+                    ans = new Value(true);
+                }
+                else
+                {
+                    ans = new Value(false);
+                }
+                //system.out.println("ans: " + ans);
+                return ans;
+            }
+            else{
+                //system.out.println("No Expression Matched for Multiplicativeoperator :  " + ctx);
+                return visitChildren(ctx);
+            }
+        }    
+        else
+        {
+        return visitChildren(ctx); }
+    }
+	
+	@Override public Value visitMultiplicativeoperator(PascalGrammarParser.MultiplicativeoperatorContext ctx) { 
+        /*Value left = this.visit(ctx.expr(0));
+        Value right = this.visit(ctx.expr(1));
+        switch (ctx.op.getType()) {
+            case MuParser.MULT:
+                return new Value(left.asDouble() * right.asDouble());
+            case MuParser.DIV:
+                return new Value(left.asDouble() / right.asDouble());
+            case MuParser.MOD:
+                return new Value(left.asDouble() % right.asDouble());
+            default:
+                throw new RuntimeException("unknown operator: " + MuParser.tokenNames[ctx.op.getType()]);
+        }*/
+        return visitChildren(ctx); 
+    }
+	
+	@Override public Value visitSignedFactor(PascalGrammarParser.SignedFactorContext ctx) { return visitChildren(ctx); }
+	
+	@Override public Value visitFactor(PascalGrammarParser.FactorContext ctx) { return visitChildren(ctx); }
+	
+	@Override public Value visitUnsignedConstant(PascalGrammarParser.UnsignedConstantContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitFunctionDesignator(PascalGrammarParser.FunctionDesignatorContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitParameterList(PascalGrammarParser.ParameterListContext ctx) 
 	{ 
-		System.out.println("Visit ParameterList");
-		//return visitChildren(ctx); 
-		Value pepe = visitChildren(ctx);
-		//String ppr = ctx.COMMA().getText();
-		//System.out.println(pepe.asString());
 		
 		return visitChildren(ctx); 
-		//return pepe;
-		//return new Value(String.valueOf(ctx.getText()));
 	}
 	
 	@Override public Value visitSet(PascalGrammarParser.SetContext ctx) { return visitChildren(ctx); }
@@ -265,15 +356,20 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	
 	@Override public Value visitElement(PascalGrammarParser.ElementContext ctx) { return visitChildren(ctx); }
 	
-    @Override public Value visitProcedureStatement(PascalGrammarParser.ProcedureStatementContext ctx) 
+	@Override public Value visitProcedureStatement(PascalGrammarParser.ProcedureStatementContext ctx) 
     { 
 		
 		System.out.println("Visit Procedure Statement");
 		String identifier = ctx.identifier().getText();
 		if(identifier.equals("writeln"))
 		{
-		System.out.println(ctx.identifier().getText());
-		return visitChildren(ctx); 
+			//String ss1 = ctx.parameterList().actualParameter().getText();
+			//String ss2 = String.valueOf(ctx.parameterList().actualparameter().getText());
+			//System.out.println("Hello Worlds:  " +  "   "+ ss1);
+			System.out.println(ctx.identifier().getText());
+
+			return null;
+		//return visitChildren(ctx); 
 		}
 		return visitChildren(ctx);
 		/*
@@ -284,11 +380,11 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 		*/
 	}
 	
-	@Override public Value visitActualParameter(PascalGrammarParser.ActualParameterContext ctx) 
-	{ 
-		//System.out.println("Actual Parameter List: ");
+	@Override public Value visitActualParameter(PascalGrammarParser.ActualParameterContext ctx)
+	 { 
+		System.out.println("Visit ActualParameter");
+		//String X = 
 		return visitChildren(ctx); 
-		//return new Value(String.valueOf(ctx.getText()));
 	}
 	
 	@Override public Value visitParameterwidth(PascalGrammarParser.ParameterwidthContext ctx) { return visitChildren(ctx); }
@@ -319,13 +415,13 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	
 	@Override public Value visitRepeatStatement(PascalGrammarParser.RepeatStatementContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitForStatement(PascalGrammarParser.ForStatementContext ctx) 
-	{ 
+    @Override public Value visitForStatement(PascalGrammarParser.ForStatementContext ctx) 	
+    { 
 		String VforI = String.valueOf(ctx.identifier().getText());
-		System.out.println("For statement");
-		System.out.println(VforI);
+		//System.out.println("For statement");
+		//System.out.println(VforI);
 		Double InitialV = Double.parseDouble(String.valueOf(ctx.forList().initialValue().getText()));
-		System.out.println("This is a double: " + InitialV);
+		//system.out.println("This is a double: " + InitialV);
 		//for(int x = InitialValueS)
 		Double FinalV = Double.parseDouble(String.valueOf(ctx.forList().finalValue().getText()));
 		for(double x = InitialV; x < FinalV; x++)
@@ -347,12 +443,10 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	
 	@Override public Value visitRecordVariableList(PascalGrammarParser.RecordVariableListContext ctx) { return visitChildren(ctx); }
 
-
-
     public void HelloT()
     {
         System.out.println("Hello");
-        Iterator hmIterator = memoryI.entrySet().iterator(); 
+        Iterator hmIterator = memory.entrySet().iterator(); 
         int i =0;
         // Iterate through the hashmap 
         // and add some bonus marks for every student 
@@ -360,8 +454,8 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
   
         while (hmIterator.hasNext()) { 
             Map.Entry mapElement = (Map.Entry)hmIterator.next(); 
-            Double marks = ((Double)mapElement.getValue()); 
-            System.out.println(mapElement.getKey() + " : " + marks); 
+            //Value marks = ((Value)mapElement.getValue()); 
+            //System.out.println(mapElement.getKey() + " : " + marks.asString()); 
             System.out.println(i);
             i++;
         } 
