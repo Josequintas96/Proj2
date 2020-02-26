@@ -457,7 +457,24 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitConditionalStatement(PascalGrammarParser.ConditionalStatementContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitIfStatement(PascalGrammarParser.IfStatementContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitIfStatement(PascalGrammarParser.IfStatementContext ctx) 
+	{ 
+		System.out.println("Visit Ifstatement");
+		 String host = ctx.expression().simpleExpression().term().signedFactor().factor().expression().getText();
+		//Value condT = visitChildren(ctx.expression());
+		//System.out.println("Condition is: " + condT);
+		//String host = condT.asString();
+		if(host.equals("true"))
+		{
+			return visitChildren(ctx.statement(0));
+		}
+		else
+		{
+			return visitChildren(ctx.statement(1));
+		}
+		//return visitChildren(ctx); 
+		//return null;
+	}
 	
 	@Override public Value visitCaseStatement(PascalGrammarParser.CaseStatementContext ctx) { return visitChildren(ctx); }
 	
