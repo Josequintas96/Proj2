@@ -11,7 +11,7 @@ begin
     writeln('This is the value of alta ' + alta);
     alta:=ln(1) + 3;
     (*There is a cooment here*)
-    BaT:=Cos(0);
+    BaT:=cos(0);
     writeln('This is the value of BaT ' + BaT);
     writeln('This is the value of alta ' + alta);
     (*There is a cooment here*)
