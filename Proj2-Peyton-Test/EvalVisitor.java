@@ -16,8 +16,10 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
     public static final double SMALL_VALUE = 0.00000000001;
 
     // store variables (there's only one global scope!)
-    private Map<String, Value> memory = new HashMap<String, Value>();
-    public Map<String, Double> memoryI = new HashMap<String, Double>();
+	private Map<String, Value> memory = new HashMap<String, Value>();
+	
+	//public Vector Scope = new vector(Map<String, Double> memoryI = new HashMap<String, Double>());
+	 public Map<String, Double> memoryI = new HashMap<String, Double>();
     //ublic Map<String, Value> memoryI = new HashMap<String, Value>();
     private Map<String, Boolean> memoryB = new HashMap<String, Boolean>();
 
@@ -189,7 +191,11 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	
 	@Override public Value visitResultType(PascalGrammarParser.ResultTypeContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitStatement(PascalGrammarParser.StatementContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitStatement(PascalGrammarParser.StatementContext ctx) 
+	{ 
+		System.out.println("Visit Statement");
+		return visitChildren(ctx); 
+	}
 	
 	@Override public Value visitUnlabelledStatement(PascalGrammarParser.UnlabelledStatementContext ctx) { return visitChildren(ctx); }
 	
@@ -211,7 +217,7 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
     @Override public Value visitSimpleExpression(PascalGrammarParser.SimpleExpressionContext ctx)
     { 
         System.out.println("Visit Simple Expression");
-        System.out.println(ctx.getText());
+        //System.out.println(ctx.getText());
         return visitChildren(ctx); 
     }
 	
@@ -220,7 +226,7 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
     @Override public Value visitTerm(PascalGrammarParser.TermContext ctx) 
     { 
         System.out.println("Visit Term");
-        System.out.println(ctx.getText());
+       // System.out.println(ctx.getText());
         //System.out.println(ctx.Value.asDouble());
      return visitChildren(ctx); 
     }
@@ -228,7 +234,7 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
     @Override public Value visitFactor(PascalGrammarParser.FactorContext ctx) 
     { 
         System.out.println("Visit Factor");
-        System.out.println(ctx.getText());
+        //System.out.println(ctx.getText());
         return visitChildren(ctx); 
     }
 	
@@ -245,11 +251,11 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 		System.out.println("Visit ParameterList");
 		//return visitChildren(ctx); 
 		Value pepe = visitChildren(ctx);
-		String ppr = ctx.COMMA().getText();
-		System.out.println(pepe.asString()+ ppr);
+		//String ppr = ctx.COMMA().getText();
+		//System.out.println(pepe.asString());
 		
-		//return visitChildren(ctx); 
-		return pepe;
+		return visitChildren(ctx); 
+		//return pepe;
 		//return new Value(String.valueOf(ctx.getText()));
 	}
 	
@@ -281,8 +287,8 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	@Override public Value visitActualParameter(PascalGrammarParser.ActualParameterContext ctx) 
 	{ 
 		//System.out.println("Actual Parameter List: ");
-		//return visitChildren(ctx); 
-		return new Value(String.valueOf(ctx.getText()));
+		return visitChildren(ctx); 
+		//return new Value(String.valueOf(ctx.getText()));
 	}
 	
 	@Override public Value visitParameterwidth(PascalGrammarParser.ParameterwidthContext ctx) { return visitChildren(ctx); }
@@ -313,7 +319,23 @@ class EvalVisitor extends PascalGrammarBaseVisitor< Value >
 	
 	@Override public Value visitRepeatStatement(PascalGrammarParser.RepeatStatementContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitForStatement(PascalGrammarParser.ForStatementContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitForStatement(PascalGrammarParser.ForStatementContext ctx) 
+	{ 
+		String VforI = String.valueOf(ctx.identifier().getText());
+		System.out.println("For statement");
+		System.out.println(VforI);
+		Double InitialV = Double.parseDouble(String.valueOf(ctx.forList().initialValue().getText()));
+		System.out.println("This is a double: " + InitialV);
+		//for(int x = InitialValueS)
+		Double FinalV = Double.parseDouble(String.valueOf(ctx.forList().finalValue().getText()));
+		for(double x = InitialV; x < FinalV; x++)
+		{
+			visitChildren(ctx.statement()); 
+			System.out.println(x);
+		}
+		//return visitChildren(ctx.statement()); 
+		return null;
+	}
 	
 	@Override public Value visitForList(PascalGrammarParser.ForListContext ctx) { return visitChildren(ctx); }
 	
