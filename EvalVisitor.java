@@ -1,5 +1,6 @@
 import org.antlr.v4.runtime.misc.NotNull;
 
+
 //import PascalGrammarParser.ElementListContext;
 
 import java.util.*;
@@ -8,17 +9,20 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.Map;
 import java.lang.*;
+import java.time.temporal.TemporalAccessor;
 import java.io.*;
+import javafx.util.Pair;
 
 public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         // used to compare floating point numbers
         public static final double SMALL_VALUE = 0.00000000001;
 
         // store variables (there's only one global scope!)
-        //private Map<String, Value> memory = new HashMap<String, Value>();
-        HashMap<String, Value> memoryX = new HashMap<String, Value>();
+        private Map<String, PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext> functions = new HashMap<String, PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext>();
+        //HashMap<String, Value> memoryX = new HashMap<String, Value>();
         Scanner scan = new Scanner(System.in);  
-        private Scope scope = new Scope(memoryX);
+        private Scope scope = new Scope();
+        Stack <Pair< String, Value>> temp = new Stack();
 
     @Override public Value visitProgram(PascalGrammarParser.ProgramContext ctx) 
         {
@@ -132,23 +136,20 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitVariableDeclaration(PascalGrammarParser.VariableDeclarationContext ctx) 
         { 
-            HashMap<String, Value> memoryI= new HashMap<String, Value>();
+            //HashMap<String, Value> memoryI= new HashMap<String, Value>();
             String nameV = ctx.identifierList().getText();
             String typeV = ctx.type().getText();
             if(typeV.equals("real"))
             {
-                memoryI.put(nameV,new Value(0.0));
-                scope.push(memoryI);
+                scope.push(nameV,new Value(0.0));
             }
             if(typeV.equals("boolean"))
             {
-                memoryI.put(nameV,new Value(true));
-                scope.push(memoryI);
+                scope.push(nameV,new Value(true));
             }
             if(typeV.equals("string"))
             {
-                memoryI.put(nameV,new Value(""));
-                scope.push(memoryI);
+                scope.push(nameV,new Value(""));
             }
         return visitChildren(ctx);
 
@@ -171,17 +172,36 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         return visitChildren(ctx); */
     }
 	
-	@Override public Value visitProcedureAndFunctionDeclarationPart(PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitProcedureAndFunctionDeclarationPart(PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext ctx) { 
+        
+        if (ctx.procedureOrFunctionDeclaration().procedureDeclaration() != null)
+        {
+        functions.put(ctx.procedureOrFunctionDeclaration().procedureDeclaration().identifier().getText(), ctx);
+        }
+        if (ctx.procedureOrFunctionDeclaration().functionDeclaration() != null)
+        {
+        functions.put(ctx.procedureOrFunctionDeclaration().functionDeclaration().identifier().getText(), ctx);
+        }
+        return null; }
 	
 	@Override public Value visitProcedureOrFunctionDeclaration(PascalGrammarParser.ProcedureOrFunctionDeclarationContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitProcedureDeclaration(PascalGrammarParser.ProcedureDeclarationContext ctx) { return visitChildren(ctx); }
+    @Override public Value visitProcedureDeclaration(PascalGrammarParser.ProcedureDeclarationContext ctx) 
+    { 
+        return visitChildren(ctx);
+    }
 	
 	@Override public Value visitFormalParameterList(PascalGrammarParser.FormalParameterListContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitFormalParameterSection(PascalGrammarParser.FormalParameterSectionContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitParameterGroup(PascalGrammarParser.ParameterGroupContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitParameterGroup(PascalGrammarParser.ParameterGroupContext ctx) { 
+        /*String nameV = ctx.identifierList().getText();
+        Pair <String, Value> p = new Pair(nameV,scope.Find(nameV));
+                temp.push(p);*/
+                return visitChildren(ctx);     
+            }
+        
 	
 	@Override public Value visitIdentifierList(PascalGrammarParser.IdentifierListContext ctx) { return visitChildren(ctx); }
 	
@@ -358,7 +378,23 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             }
         }    
         else
-        {
+        {/*
+            if(ctx.simpleExpression() != null)
+            {
+                if(ctx.simpleExpression().term() != null)
+                {
+                    if(ctx.simpleExpression().term().signedFactor() != null)
+                    {
+                        if(ctx.simpleExpression().term().signedFactor().factor() != null)
+                        {
+                            if(ctx.simpleExpression().term().signedFactor().factor().variable() != null)
+                            {
+                                return visitChildren)
+                            }
+                        }
+                    }
+                }
+            }*/
             //System.out.println("visitSimpleExpressionWRRROOOONNGG :  " + ctx);
         return visitChildren(ctx); }
     }
@@ -468,6 +504,35 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             //System.out.println(visitChildren(ctx.parameterList().actualParameter(0)).asDouble());
             return new Value(Math.pow(visitChildren(ctx.parameterList().actualParameter(0)).asDouble(), visitChildren(ctx.parameterList().actualParameter(1)).asDouble()));
         } 
+        if(functions.containsKey(identifier))
+        {
+            
+            PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext c = functions.get(identifier);
+            if(c.procedureOrFunctionDeclaration() != null)
+            {
+                if(c.procedureOrFunctionDeclaration().functionDeclaration() != null)
+                {
+                    visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList());
+                            /*String nameV = ctx.identifierList().getText();
+        Pair <String, Value> p = new Pair(nameV,scope.Find(nameV));
+                temp.push(p);*/
+                    scope.newScope(1);
+                    int i = 0;
+                    while(temp.size() != 0)
+                    {
+                        //System.out.println(c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList().formalParameterSection());
+                        //string n = c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList().formalParameterSection().parameterGroup().identifierList().identifier(i).getText();  
+                        //c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList().formalParameterSection().getText();
+                        scope.push( "hi" , temp.peek().getValue());
+                        temp.pop();
+                        i ++;
+                    }
+                    Value r = visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().block());
+                    scope.pop();
+                    return r;
+                }
+            }
+        }
         return visitChildren(ctx);
     }
 	
@@ -513,11 +578,25 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
                     */
         //System.out.println("Visit Procedure Statement");
         String identifier = ctx.identifier().getText();
+        
 		if(identifier.equals("writeln"))
 		{
-        System.out.println(visitChildren(ctx.parameterList()));
-        return visitChildren(ctx);
-        }
+            int i =0;
+                String answ = "";
+                while(ctx.parameterList().actualParameter(i) != null)
+                {
+                    
+                    // Vy; //= new Value(cc);
+                    Value key = visitChildren(ctx.parameterList().actualParameter(i));
+                    
+                        answ += key.asString();
+                    //System.out.println("number: " + i + " and key is: " + key);
+                    //visitChildren(ctx);
+                    i++;
+                }
+                    System.out.println(answ);
+                return null;
+            }
 
         
         if(identifier.equals("readln"))
@@ -536,6 +615,44 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
                 i++;
             }
             return visitChildren(ctx);
+        }
+        System.out.println("got heer");
+        if(functions.containsKey(identifier))
+        {
+            
+            PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext c = functions.get(identifier);
+            if(c.procedureOrFunctionDeclaration() != null)
+            {
+            if(c.procedureOrFunctionDeclaration().functionDeclaration() != null)
+            {
+                visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList());
+                scope.newScope(1);
+                while(temp.size() != 0)
+                {
+                    scope.push(temp.peek().getKey(), temp.peek().getValue());
+                    temp.pop();
+                }
+                Value r = visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().block());
+                scope.pop();
+                return r;
+            }
+            else if(c.procedureOrFunctionDeclaration().procedureDeclaration() != null)
+            {
+                visitChildren(c.procedureOrFunctionDeclaration().procedureDeclaration().formalParameterList());
+                scope.newScope(0);
+                while(temp.size() != 0)
+                {
+                    scope.push(temp.peek().getKey(), temp.peek().getValue());
+                    temp.pop();
+                }
+                Value r = visitChildren(c.procedureOrFunctionDeclaration().procedureDeclaration().block());
+                scope.pop();
+                return r;
+            }
+        }
+            scope.newScope(1);
+            visitChildren(c);
+            scope.pop();
         }
         return visitChildren(ctx);
 

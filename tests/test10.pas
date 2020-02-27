@@ -15,31 +15,28 @@ begin
     writeln('You have option1_true or option2_false');
     readln(connecr);
     if(connecr)
-    then BaT:=BaT*9;
+    then BaT:=BaT*9
     else BaT:=BaT+8;
-    ;
 
     writeln('Reduce the number to zero in two tries');
     writeln('You have option1_true or option2_false');
     readln(connecr);
     if(connecr)
-    then BaT:=BaT*19;
+    then BaT:=BaT*19
     else BaT:=BaT-88;
-    ;
 
     writeln('Last try tries');
     writeln('You have option1_true or option2_false');
     readln(connecr);
     if(connecr)
-    then BaT:=1;
+    then BaT:=1
     else BaT:=0;
-    ;
     
     if(BaT)
     then
-    writeln('You are right');
+    writeln('You are right')
     else
-    writeln('You fail');;
+    writeln('You fail');
     
     
     writeln('This is test10');

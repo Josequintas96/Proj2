@@ -13,10 +13,9 @@ begin
     readln(decision);
     answer := true;
     if(decision=answer) then
-        writeln('hi')
-        count:=count+1;
+        count:= count + 1
     else
-        count:=count-1;;
+        count:= count - 1;
 
     writeln('multiply by _5');
     writeln('Is the number equal to _35');
@@ -24,9 +23,9 @@ begin
     readln(decision);
     answer := false;
     if(decision=answer) then
-        count:=count+1;
+        count:=count+1
     else
-        count:=count-1;;
+        count:=count-1;
     
     writeln('divide by _25');
     writeln('Is the number equal to _5');
@@ -34,9 +33,9 @@ begin
     readln(decision);
     answer := false;
     if(decision=answer) then
-        count:=count+1;
+        count:=count+1
     else
-        count:=count-1;;
+        count:=count-1;
     
     writeln('logarithm of answer');
     writeln('Is the number equal to _1');
@@ -44,9 +43,9 @@ begin
     readln(decision);
     answer := false;
     if(decision=answer) then
-        count:=count+1;
+        count:=count+1
     else
-        count:=count-1;;
+        count:=count-1;
 
     writeln('Your score is ' + count);
     writeln('This is test7');
