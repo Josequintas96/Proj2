@@ -18,6 +18,7 @@ begin
     writeln('True or False');
     readln(decision);
     
+    writeln(decision);
     if(decision=original) then
         writeln('Congratulation you manage to stay firm to your original decision of ' + original );
     else
