@@ -1,14 +1,14 @@
-program HelloWorld;
+program checkCase;
 var
-alta : real;
-BaT : real;
-(*There is a cooment here*)
-connecr : boolean;
+   grade: real;
 begin
- alta:=212-3;
- (*There is a cooment here*)
- BaT:=(55+66);
- BaT:=BaT +alta;
- writeln(BaT);
- writeln(alta);
+   grade := 4.0;
+
+   case (grade) of
+      1.0 : writeln('Excellent!' );
+      2.0 : writeln('Well done' );
+      3.0 : writeln('You passed' );
+      4.0 : writeln('Better try again' )
+    end;
+   writeln('Your grade is  '+ grade );
 end.

@@ -573,7 +573,23 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         return visitChildren(ctx);
     }
 	
-	@Override public Value visitCaseStatement(PascalGrammarParser.CaseStatementContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitCaseStatement(PascalGrammarParser.CaseStatementContext ctx) {
+         
+        Value host = visitExpression(ctx.expression());
+        int i =0;
+        while(ctx.caseListElement(i) != null)
+        {
+            //System.out.println("case i equals: " + ctx.caseListElement(i).constList().getText());
+            //System.out.println("host is equal to :" + host.asString());
+            if(ctx.caseListElement(i).constList().getText().equals(host.asString()))
+            {
+                return visitChildren(ctx.caseListElement(i));
+            }
+            i = i+ 1;
+        
+        }
+        return visitChildren(ctx); 
+    }
 	
 	@Override public Value visitCaseListElement(PascalGrammarParser.CaseListElementContext ctx) { return visitChildren(ctx); }
 	
