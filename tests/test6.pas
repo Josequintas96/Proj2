@@ -1,17 +1,20 @@
 program HelloWorld;
 var
-BaT : real;
-decision : boolean;
-original : boolean;
+b : real;
+a : real;
+d : boolean;
+o : boolean;
 
 
 begin
-    decision:= true;
-    original:= false;
-    writeln('decision' + decision);
-    writeln('original' + original);
-    if (decision=original) then writeln('Congratulation you manage to stay firm to your original decision of ' + original ) else
-        writeln('You are easy influenciable' );
+    b := 7;
+    a := 2;
+    d:= true;
+    o:= true;
+    writeln('decision' + d);
+    writeln('original' + o);
+    if  b>a then writeln('True') else
+        writeln('false' );
     
 
     writeln('This is test6');

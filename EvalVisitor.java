@@ -46,7 +46,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitConstant(PascalGrammarParser.ConstantContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitUnsignedNumber(PascalGrammarParser.UnsignedNumberContext ctx) { return visitChildren(ctx); }
+    @Override public Value visitUnsignedNumber(PascalGrammarParser.UnsignedNumberContext ctx) { return visitChildren(ctx); }
 	
     @Override public Value visitUnsignedInteger(PascalGrammarParser.UnsignedIntegerContext ctx) 
     { 
@@ -198,70 +198,63 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
      }
 	
 	@Override public Value visitExpression(PascalGrammarParser.ExpressionContext ctx) { 
-        //System.out.println("Heerreerererre" );
         //System.out.println(ctx.expression());
-        
+            //System.out.println("visit expression" +ctx.getText());
             if(ctx.relationaloperator() != null)
         {
+            
             //System.out.println("in the inside");
             Value left = visitChildren(ctx.simpleExpression());
             String sign = ctx.relationaloperator().getText();
             Value right = visitChildren(ctx.expression());//.getText());
-            System.out.println("Left is here: " + left.asString());
-            System.out.println("Sign is here: " + sign);
-            System.out.println("Right is here: " + right.asString());
+            //System.out.println("Left is here: " + left.asString());
+            //System.out.println("Sign is here: " + sign);
+            //System.out.println("Right is here: " + right.asString());
             if (sign.compareTo("=") == 0){
                 Value ans;
-                    
                     ans = new Value((left.asString()).equals(right.asString()));
-                    System.out.println("this is the equations: " + ans.asString());
-                //System.out.println("I dont know how i got here");
-                //System.out.println("ans: " + ans);
+                    //System.out.println("this is the equations: " + ans.asString());
                 return ans;
             }
-            /*: EQUAL
-            | NOT_EQUAL
-            | LT
-            | LE
-            | GE
-            | GT
-            | IN
-            EQUAL
-   : '='
-   ;
-
-
-NOT_EQUAL
-   : '<>'
-   ;
-
-
-LT
-   : '<'
-   ;
-
-
-LE
-   : '<='
-   ;
-
-
-GE
-   : '>='
-   ;
-
-
-GT
-   : '>'
-   ;
-*/
-        }
+            
+            if (sign.compareTo("<>") == 0){
+                Value ans;
+                ans = new Value(!(left.asString()).equals(right.asString()));
+                //System.out.println("this is the equations: " + ans.asString());
+            return ans;
+            }
+            if (sign.compareTo("<") == 0){
+                Value ans;
+                ans = new Value((Double.parseDouble(left.asString())) < (Double.parseDouble(left.asString())));
+                //System.out.println("this is the equations: " + ans.asString());
+            return ans;
+            }
+            if (sign.compareTo(">") == 0){
+                Value ans;
+                ans = new Value((Double.parseDouble(left.asString())) > (Double.parseDouble(left.asString())));
+                //System.out.println("this is the equations: " + ans.asString());
+            return ans;
+            }
+            if (sign.compareTo("<=") == 0){
+                Value ans;
+                ans = new Value((Double.parseDouble(left.asString())) <= (Double.parseDouble(left.asString())));
+                //System.out.println("this is the equations: " + ans.asString());
+            return ans;
+            }
+            if (sign.compareTo(">=") == 0){
+                Value ans;
+            ans = new Value((Double.parseDouble(left.asString())) >= (Double.parseDouble(left.asString())));
+            //System.out.println("this is the equations: " + ans.asString());
+            return ans;
+            }
         //System.out.println("outside");
+        }
+        //System.out.println("o");
         return visitChildren(ctx); 
     }
 	
 	@Override public Value visitRelationaloperator(PascalGrammarParser.RelationaloperatorContext ctx) { 
-        //System.out.println("testing relationaloperation" + ctx.getText());
+        System.out.println("testing relationaloperation");
         return visitChildren(ctx); }
 	
     @Override public Value visitSimpleExpression(PascalGrammarParser.SimpleExpressionContext ctx) 
@@ -562,18 +555,22 @@ GT
     @Override public Value visitIfStatement(PascalGrammarParser.IfStatementContext ctx) 
     { 
         //System.out.println("Visit Ifstatement");
-         Value host = visitChildren(ctx.expression());
+        //System.out.println("at the if statement: " + ctx.expression().getText());
+        Value host = visitExpression(ctx.expression());
 		//String host = condT.asString();
-		if(host.asString().equals("true"))
+		if(host.asBoolean() == true)
 		{
+            //System.out.println("It is true");
 			return visitChildren(ctx.statement(0));
-		}
-		else
+        }
+        if(host.asString().equals("false") && ctx.statement(1) != null)
 		{
+            //System.out.println("It is false");
 			return visitChildren(ctx.statement(1));
 		}
 		//return visitChildren(ctx); 
-		//return null;
+        //return null;
+        return visitChildren(ctx);
     }
 	
 	@Override public Value visitCaseStatement(PascalGrammarParser.CaseStatementContext ctx) { return visitChildren(ctx); }

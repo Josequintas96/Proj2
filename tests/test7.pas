@@ -13,6 +13,7 @@ begin
     readln(decision);
     answer := true;
     if(decision=answer) then
+        writeln('hi')
         count:=count+1;
     else
         count:=count-1;;
