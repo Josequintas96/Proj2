@@ -198,11 +198,71 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
      }
 	
 	@Override public Value visitExpression(PascalGrammarParser.ExpressionContext ctx) { 
-        //System.out.print("visitExpression: " + visitChildren(ctx));
+        //System.out.println("Heerreerererre" );
+        //System.out.println(ctx.expression());
+        
+            if(ctx.relationaloperator() != null)
+        {
+            //System.out.println("in the inside");
+            Value left = visitChildren(ctx.simpleExpression());
+            String sign = ctx.relationaloperator().getText();
+            Value right = visitChildren(ctx.expression());//.getText());
+            System.out.println("Left is here: " + left.asString());
+            System.out.println("Sign is here: " + sign);
+            System.out.println("Right is here: " + right.asString());
+            if (sign.compareTo("=") == 0){
+                Value ans;
+                    
+                    ans = new Value((left.asString()).equals(right.asString()));
+                    System.out.println("this is the equations: " + ans.asString());
+                //System.out.println("I dont know how i got here");
+                //System.out.println("ans: " + ans);
+                return ans;
+            }
+            /*: EQUAL
+            | NOT_EQUAL
+            | LT
+            | LE
+            | GE
+            | GT
+            | IN
+            EQUAL
+   : '='
+   ;
+
+
+NOT_EQUAL
+   : '<>'
+   ;
+
+
+LT
+   : '<'
+   ;
+
+
+LE
+   : '<='
+   ;
+
+
+GE
+   : '>='
+   ;
+
+
+GT
+   : '>'
+   ;
+*/
+        }
+        //System.out.println("outside");
         return visitChildren(ctx); 
     }
 	
-	@Override public Value visitRelationaloperator(PascalGrammarParser.RelationaloperatorContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitRelationaloperator(PascalGrammarParser.RelationaloperatorContext ctx) { 
+        //System.out.println("testing relationaloperation" + ctx.getText());
+        return visitChildren(ctx); }
 	
     @Override public Value visitSimpleExpression(PascalGrammarParser.SimpleExpressionContext ctx) 
     {   //if(ctx.)
@@ -349,19 +409,6 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
     }
 	
 	@Override public Value visitMultiplicativeoperator(PascalGrammarParser.MultiplicativeoperatorContext ctx) { 
-        /*Value left = this.visit(ctx.expr(0));
-        Value right = this.visit(ctx.expr(1));
-
-        switch (ctx.op.getType()) {
-            case MuParser.MULT:
-                return new Value(left.asDouble() * right.asDouble());
-            case MuParser.DIV:
-                return new Value(left.asDouble() / right.asDouble());
-            case MuParser.MOD:
-                return new Value(left.asDouble() % right.asDouble());
-            default:
-                throw new RuntimeException("unknown operator: " + MuParser.tokenNames[ctx.op.getType()]);
-        }*/
         return visitChildren(ctx); 
     }
 	
@@ -515,11 +562,9 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
     @Override public Value visitIfStatement(PascalGrammarParser.IfStatementContext ctx) 
     { 
         //System.out.println("Visit Ifstatement");
-		 String host = ctx.expression().simpleExpression().term().signedFactor().factor().expression().getText();
-		//Value condT = visitChildren(ctx.expression());
-		//System.out.println("Condition is: " + condT);
+         Value host = visitChildren(ctx.expression());
 		//String host = condT.asString();
-		if(host.equals("true"))
+		if(host.asString().equals("true"))
 		{
 			return visitChildren(ctx.statement(0));
 		}
