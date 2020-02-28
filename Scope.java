@@ -38,8 +38,6 @@ class Scope {
     {
         HashMap<String, Value> memoryI= new HashMap<String, Value>();
         Pair < HashMap<String, Value>, Integer> p = new Pair(memoryI,t);
-        if(t == 0)
-
         scopes.push(p);
     }
     public void push(String s, Value v) {
