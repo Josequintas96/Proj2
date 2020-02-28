@@ -22,7 +22,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         //HashMap<String, Value> memoryX = new HashMap<String, Value>();
         Scanner scan = new Scanner(System.in);  
         private Scope scope = new Scope();
-        Stack <Pair< String, Value>> temp = new Stack();
+        Vector <Pair< String, Value>> temp = new Vector();
 
     @Override public Value visitProgram(PascalGrammarParser.ProgramContext ctx) 
         {
@@ -191,19 +191,27 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         return visitChildren(ctx);
     }
 	
-	@Override public Value visitFormalParameterList(PascalGrammarParser.FormalParameterListContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitFormalParameterList(PascalGrammarParser.FormalParameterListContext ctx) { 
+        
+        
+                return visitChildren(ctx);}
 	
 	@Override public Value visitFormalParameterSection(PascalGrammarParser.FormalParameterSectionContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitParameterGroup(PascalGrammarParser.ParameterGroupContext ctx) { 
-        /*String nameV = ctx.identifierList().getText();
-        Pair <String, Value> p = new Pair(nameV,scope.Find(nameV));
-                temp.push(p);*/
+        
                 return visitChildren(ctx);     
             }
         
 	
-	@Override public Value visitIdentifierList(PascalGrammarParser.IdentifierListContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitIdentifierList(PascalGrammarParser.IdentifierListContext ctx) { 
+        for(int i =0; i < temp.size(); i++)
+        {
+        Pair <String, Value> p = new Pair(ctx.identifier(i).getText(),temp.get(i).getValue());
+        temp.set(i, p) ;
+
+        }
+        return visitChildren(ctx); }
 	
 	@Override public Value visitConstList(PascalGrammarParser.ConstListContext ctx) { return visitChildren(ctx); }
 	
@@ -249,7 +257,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             if(ctx.relationaloperator() != null)
         {
             
-            //System.out.println("in the inside");
+            //System.out.println("in the inside IDK why this is wrong");
             Value left = visitChildren(ctx.simpleExpression());
             String sign = ctx.relationaloperator().getText();
             Value right = visitChildren(ctx.expression());//.getText());
@@ -291,11 +299,13 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
                 Value ans;
             ans = new Value((Double.parseDouble(left.asString())) >= (Double.parseDouble(right.asString())));
             //System.out.println("this is the equations: " + ans.asString());
+            
             return ans;
             }
         //System.out.println("outside");
         }
         //System.out.println("o");
+        //System.out.println("o3");
         return visitChildren(ctx); 
     }
 	
@@ -411,11 +421,11 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             Value right = visitChildren(ctx.term());
             //System.out.println("got to multiplicativeoperator");
             if (sign.compareTo("*") == 0){
-               System.out.println("left" + left.asString());
-                System.out.println("right" + right.asString());
+               //System.out.println("left" + left.asString());
+                //System.out.println("right" + right.asString());
 
                 Double ans = Double.parseDouble(left.asString()) * Double.parseDouble(right.asString());
-                System.out.println("did the multiplication" + ans);
+                //System.out.println("did the multiplication" + ans);
                 return new Value(ans);
             }
             else if(sign.compareTo("/") == 0)
@@ -460,6 +470,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         }    
         else
         {
+        //System.out.println("o3");
         return visitChildren(ctx); }
     }
 	
@@ -510,12 +521,50 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext c = functions.get(identifier);
             if(c.procedureOrFunctionDeclaration() != null)
             {
+            if(c.procedureOrFunctionDeclaration().functionDeclaration() != null)
+            {
+                //System.out.println("got to begining of functiondeclaration");
+                visitParameterList(ctx.parameterList());
+                //System.out.println("create new scope for function");
+                scope.newScope(1);
+                scope.push(identifier,new Value(0.0));
+                //System.out.println("created new scope for function");
+                visitFormalParameterList(c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList());
+                for(int i =0; i <temp.size(); i++)
+                {   
+                    
+                //System.out.println("key: " + temp.elementAt(i).getKey());
+                //System.out.println("value: " + temp.elementAt(i).getValue());
+                    Pair< String, Value> p = new Pair(temp.elementAt(i).getKey(), temp.elementAt(i).getValue());
+                    //System.out.println(p.getKey());
+                    temp.set(i, p);
+                    
+                }
+                while(temp.size() != 0)
+                {
+                    //System.out.println("key: " + temp.elementAt(temp.size()-1).getKey());
+                    //System.out.println("value: " + temp.elementAt(temp.size()-1).getValue());
+                    scope.push(temp.elementAt(temp.size()-1).getKey(), temp.elementAt(temp.size()-1).getValue());
+                    temp.removeElementAt(temp.size()-1);
+                }
+                
+                visitBlock(c.procedureOrFunctionDeclaration().functionDeclaration().block());
+                //System.out.println("Delete scope for function");
+                Value r = scope.Find(identifier);
+                //System.out.println("o1");
+                scope.pop();
+                //System.out.println("o2");
+                return r;
+            }
+            /*
+            if(c.procedureOrFunctionDeclaration() != null)
+            {
                 if(c.procedureOrFunctionDeclaration().functionDeclaration() != null)
                 {
                     visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList());
-                            /*String nameV = ctx.identifierList().getText();
+                            String nameV = ctx.identifierList().getText();
         Pair <String, Value> p = new Pair(nameV,scope.Find(nameV));
-                temp.push(p);*/
+                temp.push(p);
                     scope.newScope(1);
                     int i = 0;
                     while(temp.size() != 0)
@@ -529,14 +578,26 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
                     }
                     Value r = visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().block());
                     scope.pop();
-                    return r;
-                }
+                    return r;*/
+                
             }
         }
         return visitChildren(ctx);
     }
 	
-	@Override public Value visitParameterList(PascalGrammarParser.ParameterListContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitParameterList(PascalGrammarParser.ParameterListContext ctx) { 
+        //System.out.println("at parameterList");
+        int i=0;
+        while(ctx.actualParameter(i) != null)
+        {
+        Pair <String, Value> p = new Pair("temp",visitChildren(ctx.actualParameter(i)));
+        temp.add(p); 
+        //System.out.println("value of new variable" + temp.get(i).getValue());
+        i++;
+
+        }
+        return visitChildren(ctx); 
+    }
 	
 	@Override public Value visitSet(PascalGrammarParser.SetContext ctx) { return visitChildren(ctx); }
 	
@@ -546,36 +607,6 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
     @Override public Value visitProcedureStatement(PascalGrammarParser.ProcedureStatementContext ctx)
     { 
-        /*
-        String identifier = ctx.identifier().getText();
-		if(identifier.equals("writeln"))
-		{
-            int i =0;
-                String answ = "";
-                while(ctx.parameterList().actualParameter(i) != null)
-                {
-                    
-                    // Vy; //= new Value(cc);
-                    String key = ctx.parameterList().actualParameter(i).getText();
-                    if(memory.get(key) != null )
-                    {
-                        //System.out.println("not null");
-                        Value Vy = memory.get(key);
-                        answ += Vy.asString();
-                    }
-                    else
-                    {
-                        Value Vy = new Value(ctx.parameterList().actualParameter(i).getText());
-                        answ += Vy.asString();
-                    }
-                    //System.out.println("number: " + i + " and key is: " + key);
-                    //visitChildren(ctx);
-                    i++;
-                }
-                    System.out.println(answ);
-                return null;
-            }
-                    */
         //System.out.println("Visit Procedure Statement");
         String identifier = ctx.identifier().getText();
         
@@ -616,52 +647,43 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             }
             return visitChildren(ctx);
         }
-        System.out.println("got heer");
+        //System.out.println("got heer");
         if(functions.containsKey(identifier))
         {
             
             PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext c = functions.get(identifier);
             if(c.procedureOrFunctionDeclaration() != null)
             {
-            if(c.procedureOrFunctionDeclaration().functionDeclaration() != null)
+            if(c.procedureOrFunctionDeclaration().procedureDeclaration() != null)
             {
-                visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList());
+                
+                visitChildren(c.procedureOrFunctionDeclaration().procedureDeclaration().formalParameterList());
+                for(int i =0; i <temp.size(); i++)
+                {
+                    Pair< String, Value> p = new Pair(ctx.parameterList().actualParameter(i), temp.elementAt(i).getValue());
+                    temp.set(i, p);
+                    
+                }
+               //ln("new scope for procedureDeclaration");
                 scope.newScope(1);
                 while(temp.size() != 0)
                 {
-                    scope.push(temp.peek().getKey(), temp.peek().getValue());
-                    temp.pop();
-                }
-                Value r = visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().block());
-                scope.pop();
-                return r;
-            }
-            else if(c.procedureOrFunctionDeclaration().procedureDeclaration() != null)
-            {
-                visitChildren(c.procedureOrFunctionDeclaration().procedureDeclaration().formalParameterList());
-                scope.newScope(0);
-                while(temp.size() != 0)
-                {
-                    scope.push(temp.peek().getKey(), temp.peek().getValue());
-                    temp.pop();
+                scope.push(temp.elementAt(temp.size()-1).getKey(), temp.elementAt(temp.size()-1).getValue());
+                    temp.removeElementAt(temp.size()-1);
                 }
                 Value r = visitChildren(c.procedureOrFunctionDeclaration().procedureDeclaration().block());
+                //System.out.println("delete scope for procedureDeclaration");
                 scope.pop();
                 return r;
             }
         }
+        //System.out.println("create scope for idk");
             scope.newScope(1);
             visitChildren(c);
             scope.pop();
+            //System.out.println("delete scope for idk");
         }
         return visitChildren(ctx);
-
-		/*
-		System.out.println("Visit Procedure Statement");
-		Value pepe2 = visitChildren(ctx); 
-		System.out.println(pepe2.asString());
-		return pepe2;
-		*/
     }
 	
     @Override public Value visitActualParameter(PascalGrammarParser.ActualParameterContext ctx) 
@@ -669,12 +691,13 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         { 
             //System.out.println("Visit ActualParameter");
             //String X = 
-            if(scope.Find(ctx.getText() ) != null )
+            /*if(scope.Find(ctx.getText() ) != null )
             {
                 //System.out.println("not null");
                 return scope.Find(ctx.getText());
-            }
+            }*/
             //System.out.println("NULL");
+            //System.out.println("o4");
             return visitChildren(ctx); 
         }
      }
@@ -700,7 +723,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         //System.out.println("Visit Ifstatement");
         //System.out.println("at the if statement: " + ctx.expression().getText());
         Value host = visitExpression(ctx.expression());
-		//String host = condT.asString();
+        //String host = condT.asString();
 		if(host.asBoolean() == true)
 		{
             //System.out.println("It is true");
