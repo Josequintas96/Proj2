@@ -719,12 +719,14 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 		String VforI = String.valueOf(ctx.identifier().getText());
 		//System.out.println("For statement");
 		//System.out.println(VforI);
-		Double InitialV = Double.parseDouble(String.valueOf(ctx.forList().initialValue().getText()));
+        Double InitialV = Double.parseDouble(String.valueOf(ctx.forList().initialValue().getText()));
+        scope.exists(VforI, new Value(InitialV));
 		//System.out.println("This is a double: " + InitialV);
 		//for(int x = InitialValueS)
 		Double FinalV = Double.parseDouble(String.valueOf(ctx.forList().finalValue().getText()));
 		for(double x = InitialV; x < FinalV; x++)
 		{
+            scope.exists(VforI, new Value(x));
 			visitChildren(ctx.statement()); 
 			//System.out.println(x);
 		}
