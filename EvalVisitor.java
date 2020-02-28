@@ -569,6 +569,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
                     //visitChildren(ctx);
                     i++;
                 }
+                    answ = answ.replace("\'","");
                     System.out.println(answ);
                 return null;
             }
