@@ -1,4 +1,4 @@
-program forLoop;
+program forLoopTest;
 var
    a: real;
 

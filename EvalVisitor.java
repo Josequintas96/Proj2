@@ -202,7 +202,13 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitResultType(PascalGrammarParser.ResultTypeContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitStatement(PascalGrammarParser.StatementContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitStatement(PascalGrammarParser.StatementContext ctx) { 
+        Value v = visitChildren(ctx);
+        if(v != null)
+        {
+      //  System.out.println("value at statement is: " + v.asString());
+        }
+        return  v;}
 	
 	@Override public Value visitUnlabelledStatement(PascalGrammarParser.UnlabelledStatementContext ctx) { return visitChildren(ctx); }
 	
@@ -658,31 +664,39 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	@Override public Value visitStructuredStatement(PascalGrammarParser.StructuredStatementContext ctx) { return visitChildren(ctx); }
 	
 	@Override public Value visitCompoundStatement(PascalGrammarParser.CompoundStatementContext ctx) { 
-        /*if(ctx.BEGIN() != null)
+        Value v = visitStatements(ctx.statements());
+        if(v != null)
         {
-            scope.newScope(0);
-            Value v = visitChildren(ctx);
-            scope.pop();
-            return v;
-        }*/
-        return visitChildren(ctx); }
+        //System.out.println("value at compoundStatement is: " + v.asString());
+        }
+        return  v;} 
 
 	@Override public Value visitStatements(PascalGrammarParser.StatementsContext ctx) { 
-        /*int i =0;
+        int i =0;
+        //System.out.println("got here");
         while(ctx.statement(i) != null)
         {   
-            Value v = visitChildren(ctx.statement(i));
-            if (v.equals("break"))
+            Value v = visitStatement(ctx.statement(i));
+            //System.out.println("visited statement: " + i);
+            if(v != null)
             {
-                return v;
-            }
-            if(v.equals("continue"))
-            {
-                return v;
+                //System.out.println(v);
+                if (v.asString().equals("breakX"))
+                {
+                    //System.out.println("There is a Break");
+                    Value t = new Value("breakX");
+                    return t;
+                }
+                if(v.asString().equals("continueX"))
+                {
+                    //System.out.println("There is a Continue");
+                    return null;
+                }
+                //System.out.println(v.asString() + "value after coninue and break");
             }
             i++;
-        }*/
-        return visitChildren(ctx); }
+        }
+    return null; }
 	
 	@Override public Value visitConditionalStatement(PascalGrammarParser.ConditionalStatementContext ctx) { return visitChildren(ctx); }
 	
@@ -692,7 +706,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         //System.out.println("at the if statement: " + ctx.expression().getText());
         Value host = visitExpression(ctx.expression());
         //String host = condT.asString();
-		if(host.asString().equals("true"))
+		if(host.asBoolean() ==true)
 		{
             //System.out.println("It is true");
 			return visitChildren(ctx.statement(0));
@@ -737,7 +751,18 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         scope.newScope(0);
 		while(visitExpression(ctx.expression()).asBoolean() == true)
 		{
-			visitChildren(ctx.statement());
+            Value v = visitChildren(ctx.statement()); 
+            //System.out.println(x);
+            //System.out.println("almost a break but no break" + v);
+            if(v != null)
+            {
+                //System.out.println("almost a break but no break");
+                if(v.asString().equals("breakX"))
+                {
+                    //System.out.println("breaked in the for look");
+                    return null;
+                }
+            }   
         }
         scope.pop();
 		return null;
@@ -761,10 +786,16 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             scope.exists(VforI, new Value(x));
 			Value v = visitChildren(ctx.statement()); 
             //System.out.println(x);
-            /*if(v.equals("break"))
+            //System.out.println("almost a break but no break" + v);
+            if(v != null)
             {
-                break;
-            }*/
+                //System.out.println("almost a break but no break");
+                if(v.asString().equals("breakX"))
+                {
+                    //System.out.println("breaked in the for look");
+                    return null;
+                }
+            }   
 		}
         //return visitChildren(ctx.statement()); 
         scope.pop();

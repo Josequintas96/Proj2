@@ -1,4 +1,4 @@
-program exContinue; 
+program ForBreakTest; 
 var
    a: real;
 
@@ -12,7 +12,8 @@ begin
          if a > 17 then
          break
          else
-         writeln('less than 17');
+         writeln('less than', a);
+         writeln('didnt break');
       end;
       
       writeln('value of a: ', a);

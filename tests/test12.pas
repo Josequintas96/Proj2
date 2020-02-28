@@ -1,4 +1,4 @@
-program fibonacci;
+program fibonacciTest;
 var
     a: real;
 
@@ -8,6 +8,8 @@ begin
 	if n > 1 then
 	begin
 		fibonacci := fibonacci(n - 2) + fibonacci(n - 1);
+        
+    break;
 	end
 	else
 	begin

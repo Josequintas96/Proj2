@@ -7,7 +7,7 @@ o : boolean;
 
 
 begin
-    b := 7;
+    b := 1;
     a := 2;
     d:= true;
     o:= true;

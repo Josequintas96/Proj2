@@ -7,26 +7,25 @@ BaT : real;
 connecr : boolean;
 
 begin
-    
     writeln('Select a number');
     readln(BaT);
     
     writeln('Reduce the number to zero in three tries');
-    writeln('You have option1_true or option2_false');
+    writeln('Select either true or false');
     readln(connecr);
     if(connecr)
     then BaT:=BaT*9
     else BaT:=BaT+8;
 
     writeln('Reduce the number to zero in two tries');
-    writeln('You have option1_true or option2_false');
+    writeln('Select either true or false');
     readln(connecr);
     if(connecr)
     then BaT:=BaT*19
     else BaT:=BaT-88;
 
     writeln('Last try tries');
-    writeln('You have option1_true or option2_false');
+    writeln('Select either true or false');
     readln(connecr);
     if(connecr)
     then BaT:=1
