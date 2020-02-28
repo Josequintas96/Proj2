@@ -213,7 +213,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         //System.out.println(visitChildren(ctx.expression()).asString());
         Value V = visitChildren( ctx.expression());
         //System.out.println("V is here" +V.asString());
-        scope.replace(ctx.variable().getText(), V );
+        scope.exists(ctx.variable().getText(), V );
         return visitChildren(ctx); 
     }
 	

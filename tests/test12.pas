@@ -4,6 +4,7 @@ var
 
 function fibonacci(n: real): real;
 begin
+    
 	if n > 1 then
 	begin
 		fibonacci := fibonacci(n - 2) + fibonacci(n - 1);
@@ -15,7 +16,7 @@ begin
 end;
 
 begin
- 
+ writeln('hi');
     a:= fibonacci(8);
     writeln('fibonacci(8):',a);
         a:= fibonacci(3);

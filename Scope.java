@@ -38,6 +38,8 @@ class Scope {
     {
         HashMap<String, Value> memoryI= new HashMap<String, Value>();
         Pair < HashMap<String, Value>, Integer> p = new Pair(memoryI,t);
+        if(t == 0)
+
         scopes.push(p);
     }
     public void push(String s, Value v) {
@@ -83,6 +85,11 @@ class Scope {
         }
         else
         scopes.peek().getKey().replace(key , Vtt);
+    }
+
+    public void exists(String key, Value Vtt)
+    {
+            scopes.elementAt(scopes.size()-1).getKey().put(key,Vtt);
     }
 
     //of you want to get a key; you should use this method
