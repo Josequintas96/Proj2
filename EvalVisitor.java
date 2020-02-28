@@ -26,7 +26,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 
     @Override public Value visitProgram(PascalGrammarParser.ProgramContext ctx) 
         {
-            System.out.println("Start of Program" + ctx);
+            //System.out.println("Start of Program" + ctx);
             return visitChildren(ctx); 
         }
 	@Override public Value visitProgramHeading(PascalGrammarParser.ProgramHeadingContext ctx) { return visitChildren(ctx); }
