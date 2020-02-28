@@ -592,6 +592,14 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             return visitChildren(ctx);
         }
         //System.out.println("got heer");
+        if(identifier.equals("continue"))
+        {
+            return new Value("continueX");
+        }
+        if(identifier.equals("break"))
+        {
+            return new Value("breakX");
+        }
         if(functions.containsKey(identifier))
         {
             
@@ -648,9 +656,32 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
 	@Override public Value visitStructuredStatement(PascalGrammarParser.StructuredStatementContext ctx) { return visitChildren(ctx); }
 	
-	@Override public Value visitCompoundStatement(PascalGrammarParser.CompoundStatementContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitCompoundStatement(PascalGrammarParser.CompoundStatementContext ctx) { 
+        /*if(ctx.BEGIN() != null)
+        {
+            scope.newScope(0);
+            Value v = visitChildren(ctx);
+            scope.pop();
+            return v;
+        }*/
+        return visitChildren(ctx); }
 
-	@Override public Value visitStatements(PascalGrammarParser.StatementsContext ctx) { return visitChildren(ctx); }
+	@Override public Value visitStatements(PascalGrammarParser.StatementsContext ctx) { 
+        /*int i =0;
+        while(ctx.statement(i) != null)
+        {   
+            Value v = visitChildren(ctx.statement(i));
+            if (v.equals("break"))
+            {
+                return v;
+            }
+            if(v.equals("continue"))
+            {
+                return v;
+            }
+            i++;
+        }*/
+        return visitChildren(ctx); }
 	
 	@Override public Value visitConditionalStatement(PascalGrammarParser.ConditionalStatementContext ctx) { return visitChildren(ctx); }
 	
@@ -727,8 +758,12 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 		for(double x = InitialV; x < FinalV; x++)
 		{
             scope.exists(VforI, new Value(x));
-			visitChildren(ctx.statement()); 
-			//System.out.println(x);
+			Value v = visitChildren(ctx.statement()); 
+            //System.out.println(x);
+            /*if(v.equals("break"))
+            {
+                break;
+            }*/
 		}
         //return visitChildren(ctx.statement()); 
         scope.pop();
