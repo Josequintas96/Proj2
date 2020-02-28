@@ -153,23 +153,6 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             }
         return visitChildren(ctx);
 
-
-
-            /*String nameV = ctx.identifierList().getText();
-            String typeV = ctx.type().getText();
-            if(typeV.equals("real"))
-            {
-                memory.put(nameV,new Value(0.0));
-            }
-            if(typeV.equals("boolean"))
-            {
-				memory.put(nameV,new Value(true));
-            }
-            if(typeV.equals("string"))
-            {
-                memory.put(nameV,new Value(""));
-            }
-        return visitChildren(ctx); */
     }
 	
 	@Override public Value visitProcedureAndFunctionDeclarationPart(PascalGrammarParser.ProcedureAndFunctionDeclarationPartContext ctx) { 
@@ -388,23 +371,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
             }
         }    
         else
-        {/*
-            if(ctx.simpleExpression() != null)
-            {
-                if(ctx.simpleExpression().term() != null)
-                {
-                    if(ctx.simpleExpression().term().signedFactor() != null)
-                    {
-                        if(ctx.simpleExpression().term().signedFactor().factor() != null)
-                        {
-                            if(ctx.simpleExpression().term().signedFactor().factor().variable() != null)
-                            {
-                                return visitChildren)
-                            }
-                        }
-                    }
-                }
-            }*/
+        {
             //System.out.println("visitSimpleExpressionWRRROOOONNGG :  " + ctx);
         return visitChildren(ctx); }
     }
@@ -556,29 +523,6 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
                 //System.out.println("o2");
                 return r;
             }
-            /*
-            if(c.procedureOrFunctionDeclaration() != null)
-            {
-                if(c.procedureOrFunctionDeclaration().functionDeclaration() != null)
-                {
-                    visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList());
-                            String nameV = ctx.identifierList().getText();
-        Pair <String, Value> p = new Pair(nameV,scope.Find(nameV));
-                temp.push(p);
-                    scope.newScope(1);
-                    int i = 0;
-                    while(temp.size() != 0)
-                    {
-                        //System.out.println(c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList().formalParameterSection());
-                        //string n = c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList().formalParameterSection().parameterGroup().identifierList().identifier(i).getText();  
-                        //c.procedureOrFunctionDeclaration().functionDeclaration().formalParameterList().formalParameterSection().getText();
-                        scope.push( "hi" , temp.peek().getValue());
-                        temp.pop();
-                        i ++;
-                    }
-                    Value r = visitChildren(c.procedureOrFunctionDeclaration().functionDeclaration().block());
-                    scope.pop();
-                    return r;*/
                 
             }
         }
@@ -689,15 +633,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
     @Override public Value visitActualParameter(PascalGrammarParser.ActualParameterContext ctx) 
     { 
         { 
-            //System.out.println("Visit ActualParameter");
-            //String X = 
-            /*if(scope.Find(ctx.getText() ) != null )
-            {
-                //System.out.println("not null");
-                return scope.Find(ctx.getText());
-            }*/
-            //System.out.println("NULL");
-            //System.out.println("o4");
+           
             return visitChildren(ctx); 
         }
      }
@@ -724,7 +660,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         //System.out.println("at the if statement: " + ctx.expression().getText());
         Value host = visitExpression(ctx.expression());
         //String host = condT.asString();
-		if(host.asBoolean() == true)
+		if(host.asString().equals("true"))
 		{
             //System.out.println("It is true");
 			return visitChildren(ctx.statement(0));
@@ -766,10 +702,12 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
         
         //Value Vtt = visitExpression(ctx.expression());
         //System.out.println(Vtt.asBoolean());
+        scope.newScope(0);
 		while(visitExpression(ctx.expression()).asBoolean() == true)
 		{
 			visitChildren(ctx.statement());
-		}
+        }
+        scope.pop();
 		return null;
      }
 	
@@ -777,6 +715,7 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 	
     @Override public Value visitForStatement(PascalGrammarParser.ForStatementContext ctx) 	
     { 
+        scope.newScope(0);
 		String VforI = String.valueOf(ctx.identifier().getText());
 		//System.out.println("For statement");
 		//System.out.println(VforI);
@@ -789,7 +728,8 @@ public class EvalVisitor extends PascalGrammarBaseVisitor<Value> {
 			visitChildren(ctx.statement()); 
 			//System.out.println(x);
 		}
-		//return visitChildren(ctx.statement()); 
+        //return visitChildren(ctx.statement()); 
+        scope.pop();
 		return null;
 	}
 	

@@ -1,27 +1,31 @@
-program exFunction;
+program fibonacci;
 var
     a: real;
-    b: real;
 
-function max (num1 , num2: real) : real;
-var
-   result: real;
+function fibonacci(n: real): real;
 begin
-writeln(num1, 'num1');
-writeln(num2, 'num2');
-   if  num1>num2 then result := num1 else
-        result := num2;
-      
-      writeln('finish function before', result);
-   max := result;
-   writeln('finish function');
+	if n > 1 then
+	begin
+		fibonacci := fibonacci(n - 2) + fibonacci(n - 1);
+	end
+	else
+	begin
+		fibonacci := n;
+	end;
 end;
 
 begin
-    writeln('1hi');
-   a := 100;
-   writeln('2hi');
-   a := max(a, b);
-   
-   writeln( 'Max value is : ', a);
+ 
+    a:= fibonacci(8);
+    writeln('fibonacci(8):',a);
+        a:= fibonacci(3);
+    writeln('fibonacci(3):',a);
+        a:= fibonacci(5);
+    writeln('fibonacci(5):',a);
+        a:= fibonacci(10);
+    writeln('fibonacci(10):',a);
+        a:= fibonacci(2);
+    writeln('fibonacci(2):',a);
+        a:= fibonacci(1);
+    writeln('fibonacci(1):',a);
 end.
